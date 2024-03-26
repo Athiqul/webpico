@@ -1,0 +1,55 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+/* Navbar */
+.nav-link {
+    @apply text-black font-sans p-[10px]
+}
+.nav-link-mobile{
+    @apply p-2 
+}
+.active {
+    @apply text-primary border-b-2 border-primary
+}
+
+.dropdown-link {
+    @apply cursor-pointer py-2 px-3 text-white font-sans bg-primary border-b border-secondary hover:bg-secondary w-full duration-300 transition-all
+    /*hover:w-[calc(100%+2rem)]*/
+}
+
+.contact {
+    @apply border border-primary py-[10px] px-5 font-sans text-primary rounded hover:bg-primary hover:text-white transition-all duration-500 items-center gap-2 min-w-36 justify-center
+}
+.btn-primary{
+    @apply bg-primary rounded py-[10px] px-5 border border-primary font-sans text-white transition-all duration-500 items-center min-w-36
+}
+.title{
+    @apply font-montserrat text-2xl text-primary font-bold mb-[10px] text-center
+}
+.description{
+    @apply font-montserrat font-medium text-secondary text-xl text-center
+}
+.slick-slide {
+    text-align: center;
+    color: #419be0;
+    /* background: white; */
+    margin: 10px;
+  }
+  .pagination{
+    @apply  h-11 w-11 text-white bg-primary text-center pt-3 hover:bg-secondary cursor-pointer
+  }
+  .active-pagination{
+    background-color: #FF6B00 !important;
+  }
+.category-active{
+    @apply bg-secondary text-white fill-white
+}
+.slick-slide:not(.slick-active) {
+    opacity: 0.5;
+ }
+ .mobileMenu body{
+    overflow: hidden !important;
+ }
