@@ -24,9 +24,9 @@
             <div class="card">
                 @include('admin.assets.alert')
                 <div class="card-body">
-                    <form action="{{ route('admin.password.update') }}" method="post" id="loginForm">
+                    <form action="{{ route('password.update') }}" method="post" id="loginForm">
                         @csrf
-                        @method('PATCH')
+                         @method('PUT')
                         <div class="col-12 form-group">
                             <label for="current_password" class="form-label">Current Password</label>
                             <input type="password" name="current_password" class="form-control @error('current_password')
@@ -41,11 +41,11 @@
 
 
                         <div class="col-12 form-group">
-                            <label for="new_password" class="form-label">New  Password</label>
-                            <input type="password" name="new_password" class="form-control @error('new_password')
+                            <label for="password" class="form-label">New  Password</label>
+                            <input type="password" name="password" class="form-control @error('password')
                                 {{ 'is-invalid' }}
-                            @enderror" id="new_password" placeholder="New password" required>
-                            @error('new_password')
+                            @enderror" id="password" placeholder="New password" required>
+                            @error('password')
                             <span class="text-danger">{{ $message }}</span>
                               @enderror
 
@@ -94,7 +94,7 @@
     $(document).ready(function() {
 			$('#loginForm').validate({
 				rules: {
-					 new_password: {
+					 password: {
 						required: true,
                         minlength:6,
                         maxlength:255,
@@ -106,10 +106,10 @@
                         maxlength:255,
 					},
 
-                    confirm_password: {
+                    password_confirmation: {
 
                         equalTo: {
-                param: "#new_password",
+                param: "#password",
 
        }
 					},
@@ -124,7 +124,7 @@
 
 					},
 
-                    new_password: {
+                    password: {
 						required: 'Please type new password',
                         minlength:'Too short password not allowed!',
                         maxlength:'Too long password not allowed!',

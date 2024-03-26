@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
 
 class PasswordController extends Controller
@@ -15,15 +16,19 @@ class PasswordController extends Controller
      */
     public function update(Request $request): RedirectResponse
     {
-        $validated = $request->validateWithBag('updatePassword', [
-            'current_password' => ['required', 'current_password'],
-            'password' => ['required', Password::defaults(), 'confirmed'],
+        $validate=Validator::make($request->all(),[
+            'current_password' => ['required'],
+            'password' => ['required', Password::defaults(),'confirmed'],
         ]);
+
+        if ($validate->fails()) {
+            return back()->withErrors($validate->errors())->withInput()->with(['toast-type'=>'warning','toast-message'=>'Some issue! please fix and try again!']);
+        }
 
         $request->user()->update([
-            'password' => Hash::make($validated['password']),
+            'password' => Hash::make($request->password),
         ]);
 
-        return back()->with('status', 'password-updated');
+        return back()->with(['toast-type'=>'success','toast-message'=>'Password has been updated']);
     }
 }

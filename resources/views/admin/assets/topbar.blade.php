@@ -332,7 +332,7 @@
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bx bx-user"></i><span>Profile</span></a>
                     </li>
-                    <li><a class="dropdown-item" href="javascript:;"><i class="bx bx-cog"></i><span>Change Password</span></a>
+                    <li><a class="dropdown-item" href="{{ route('password.confirm') }}"><i class="bx bx-cog"></i><span>Change Password</span></a>
                     </li>
 
                     <li>
