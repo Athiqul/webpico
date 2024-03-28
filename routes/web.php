@@ -4,6 +4,10 @@ use App\Http\Controllers\Admin\Testimonal;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
+//Public image
+Route::get('image/{folder}/{image}',[Testimonal::class,'image'])->name('public.image');
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -20,7 +24,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::post('add-testimonial','store');
         Route::get('edit-testimonial/{id}','edit')->name('admin.testimonial.edit');
         Route::put('edit-testimonial/{id}','update');
-        Route::put('testimonal-status-change/{id}','statusChange')->name('admin.testimonial.status');
+        Route::get('testimonal-status-change/{id}','statusChange')->name('admin.testimonial.status');
         Route::get('testimonal-list','index')->name('admin.testimonial.list');
 
     });

@@ -71,13 +71,13 @@
                                                     <th scope="row"><?= ++$key ?></th>
                                                     <td>{{ $item->client_name }}</td>
                                                     <td>{{ $item->company_name }}</td>
-                                                    <td><img src="{{ $item->image==null?asset('assets/images/no_image.jpg') : asset($item->image) }}" alt="{{ $item->client_name  }}'s image"></td>
+                                                    <td><img src="{{ $item->image==null?asset('assets/images/no_image.jpg') : route('public.image',['folder'=>'testimonials','image'=>$item->image]) }}" width="50px" height="50px" alt="{{ $item->client_name  }}'s image"></td>
                                                     <td>{{ $item->updated_at->diffForHumans() }}</td>
-                                                    <td> <span class="badge rounded bg-{{ $item->status==1?'success':'danger' }}"></span> {{ $item->status==1?'Active':'Inactive' }}</td>
+                                                    <td> <span class="badge rounded bg-{{ $item->status==1?'success':'danger' }}">{{ $item->status==1?'Active':'Inactive' }}</span> </td>
 
                                                     <td>
                                                         <a href="{{ route('admin.testimonial.edit',encrypt($item->id)) }}" class="btn btn-info"><i class="fadeIn animated bx bx-pencil"></i></a>
-                                                        <a href="{{ route('testimonal-status-change',$item->id) }}" class="status btn {{ $item->status==1?'btn-danger':'btn-success' }}"><i class="fadeIn animated bx bx-{{   $item->status == "1" ? 'x' : 'check' }}"></i></a>
+                                                        <a href="{{ route('admin.testimonial.status',encrypt($item->id)) }}" class="status btn {{ $item->status==1?'btn-danger':'btn-success' }}"><i class="fadeIn animated bx bx-{{   $item->status == "1" ? 'x' : 'check' }}"></i></a>
                                                     </td>
                                                 </tr>
 
