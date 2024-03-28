@@ -86,7 +86,7 @@
         </li>
 
         <li>
-            <a href="javascript:;" class="has-arrow">
+            <a href="{{ route('admin.testimonial.list') }}" class="has-arrow">
                 <div class="parent-icon"><i class="bx bx-category"></i>
                 </div>
                 <div class="menu-title">Testimional</div>

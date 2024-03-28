@@ -15,7 +15,7 @@ class Testimonal extends Controller
     public function add()
     {
 
-        return view('admin.testimonal.add');
+        return view('admin.testimonial.add');
     }
 
     public function store(Request $request)

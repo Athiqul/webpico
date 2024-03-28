@@ -35,7 +35,7 @@ Add Testimonial| WebPico
             <hr>
             <div class="card" data-select2-id="24">
                 <div class="card-body" data-select2-id="23">
-                   <form method="POST" action="{{ route(admin.testimonial.add) }}" id="transfer" enctype="multipart/form-data">
+                   <form method="POST" action="{{ route('admin.testimonial.add') }}" id="transfer" enctype="multipart/form-data">
                     @csrf
 
                     <div class="border p-3 rounded" data-select2-id="22">

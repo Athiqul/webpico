@@ -19,8 +19,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('add-testimonial','add')->name('admin.testimonial.add');
         Route::post('add-testimonial','store');
         Route::get('edit-testimonial/{id}','edit')->name('admin.testimonial.edit');
-        Route::put('edit-testimonial/{id}','update')->name('admin.testimonial.edit');
+        Route::put('edit-testimonial/{id}','update');
         Route::put('testimonal-status-change/{id}','statusChange')->name('admin.testimonial.status');
+        Route::get('testimonal-list','index')->name('admin.testimonial.list');
 
     });
 

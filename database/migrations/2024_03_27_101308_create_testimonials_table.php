@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('client_name');
             $table->string('image')->nullable();
             $table->string('quote');
+            $table->string('company_name')->nullable();
             $table->enum('status',['1','0'])->default('1');
             $table->timestamps();
 
