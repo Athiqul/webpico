@@ -81,10 +81,11 @@ class Testimonal extends Controller
 
            $id=decrypt($id);
            $item=Testimonial::findOrFail($id);
-           return view('admin.testimonial.edit',compact($item));
+           return view('admin.testimonial.edit',compact('item'));
         }
         catch(\Exception $e)
         {
+            dd($e->getMessage());
             return redirect()->back()->withErrors($e->getMessage());
         }
     }
@@ -96,10 +97,11 @@ class Testimonal extends Controller
                 "client_name" => ['required', 'string', 'max:255', 'min:3'],
                 "image" => ['nullable', 'image', 'mimes:png,jpg', 'max:3096'],
                 "quote" => ["rquired", 'string', 'max:255', 'min:3'],
+                "company_name"=>['required', 'string', 'max:255'],
 
             ]);
 
-            if ($validate->fails()) {
+            if ($validate->failed()) {
                 return redirect()->back()->withErrors($validate->errors())->withInput();
             }
 
@@ -107,29 +109,40 @@ class Testimonal extends Controller
             $item=Testimonial::findOrFail($id);
 
             //check Image
-            $image_url=null;
+            $image_name=null;
             if($request->file('image'))
             {
                 //Remove Previous image
 
                 if($item->image!==null)
                 {
-                    unlink(storage_path($item->image));
+                    $path = storage_path('app/uploads/testimonials/' . $item->image);
+                    if(File::exists($path))
+                    {
+                        try {
+                            // Delete the file
+                            File::delete($path);
+                        } catch (\Exception $ex) {
+
+                        }
+                    }
+
                 }
 
                 $image = $request->file('image');
             $image_name = hexdec(uniqid()) . '.' . $image->getClientOriginalExtension();
-            $path = 'images/testimonal/';
-            if (!File::exists(storage_path($path))) {
-                File::makeDirectory(storage_path($path), 0777, true);
-            }
-            Image::make($image)->resize(600, 600)->save(storage_path('images/testimonal/' . $image_name));
-            $image_url = 'images/testimonal/' . $image_name;
-            }
+            $path = $image->storeAs('testimonials', $image_name, 'uploads');
+            // Full path to the saved image
+            $fullPath = storage_path("app/uploads/{$path}");
 
+            Image::make($fullPath)->fit(600, 600, function ($constraint) {
+                $constraint->upsize();
+            })->save($fullPath);
+        }
             $item->client_name=$request->client_name;
-            $item->image=$image_url==null?$item->image:$image_url;
+            $item->image=$image_name==null?$item->image:$image_name;
             $item->quote=$request->quote;
+            $item->company_name=$request->company_name;
 
             if($item->isClean())
             {
@@ -142,9 +155,11 @@ class Testimonal extends Controller
           }catch(\Exception $e)
 
           {
-            return redirect()->back()->withErrors($e->getMessage());
+            dd($e->getMessage());
+            return redirect()->back()->with(['toast-type'=>'danger','toast-message'=>'Something went wrong!']);
           }
     }
+
 
     //Show All Testimonals
     public function index()

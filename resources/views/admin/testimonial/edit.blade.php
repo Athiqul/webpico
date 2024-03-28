@@ -1,7 +1,7 @@
 @extends('admin.layout.master_layout')
 
 @section('title')
-{{ $package->name }}| MasterSeller
+Update {{ ucwords($item->client_name) }} Testimonial| WebPico
 @endsection
 
 @section('need-css')
@@ -16,13 +16,13 @@
 <div class="page-content" data-select2-id="27">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">{{ $package->name }} Device Package</div>
+        <div class="breadcrumb-title pe-3">{{ "Update ".ucwords($item->client_name).' '.'Testimonial' }}</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.show.package') }}"><i class="bx bx-home-alt"></i></a>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.testimonial.list') }}"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ $package->name }} Device Package</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ "Update ".ucwords($item->client_name).' '.'Testimonial' }}</li>
                 </ol>
             </nav>
         </div>
@@ -31,100 +31,87 @@
     <!--end breadcrumb-->
     <div class="row" data-select2-id="26">
         <div class="col-xl-9 mx-auto" data-select2-id="25">
-            <h6 class="mb-0 text-uppercase">Update {{ $package->name }} Device Package</h6>
+            <h6 class="mb-0 text-uppercase">{{ "Update ".ucwords($item->client_name).' '.'Testimonial' }}</h6>
             <hr>
             <div class="card" data-select2-id="24">
                 <div class="card-body" data-select2-id="23">
-                   <form method="POST" action="{{ route('admin.update.package',$package->id) }}" id="transfer" >
+                   <form method="POST" action="{{ route('admin.testimonial.edit',encrypt($item->id)) }}" id="transfer" enctype="multipart/form-data">
                     @csrf
-                    @method('PATCH')
+                    @method('PUT')
                     <div class="border p-3 rounded" data-select2-id="22">
 
 
                         <div class="col-12">
-                            <label for="amount" class="form-label">Device Package Name</label>
+                            <label for="amount" class="form-label">Client Name</label>
                             <div class="input-group form-group ">
-                                <input type="text" name="name" value="{{ old('name',$package->name) }}" class="form-control border-start-0  @error('name')
+                                <input type="text" name="client_name" value="{{ old('client_name',$item->client_name) }}" class="form-control border-start-0  @error('client_name')
                                 {{ "is-invalid" }}
-                               @enderror" placeholder="Package name"  title="Package Name!" required>
+                               @enderror" placeholder="Client Name"  title="Client Name" required>
 
                             </div>
 
-                            @error('name')
+                            @error('client_name')
                             <span class="text-danger">{{ $message }}</span>
                           @enderror
 
                         </div>
 
                         <div class="col-12">
-                            <label for="amount" class="form-label">Star</label>
+                            <label for="amount" class="form-label">Quote:</label>
                             <div class="input-group form-group">
-                                <input type="text" name="star" value="{{ old('star',$package->star) }}" class="form-control border-start-0  @error('star')
+                                <input type="text" name="quote" value="{{ old('quote',$item->client_name) }}" class="form-control border-start-0  @error('quote')
                                 {{ "is-invalid" }}
-                               @enderror" placeholder="Star"   title="Star!" required>
+                               @enderror" placeholder="Quotaion of clients"   title="Quotation!" required>
 
                             </div>
-                            @error('star')
+                            @error('quote')
                             <span class="text-danger">{{ $message }}</span>
                           @enderror
 
                         </div>
 
                         <div class="col-12">
-                            <label for="amount" class="form-label">Price</label>
+                            <label for="amount" class="form-label">Company Name:</label>
+                            <div class="input-group form-group">
+                                <input type="text" name="company_name" value="{{ old('company_name',$item->company_name) }}" class="form-control border-start-0  @error('company_name')
+                                {{ "is-invalid" }}
+                               @enderror" placeholder="Company Name"   title="Company Name!" required>
+
+                            </div>
+                            @error('company_name')
+                            <span class="text-danger">{{ $message }}</span>
+                          @enderror
+
+                        </div>
+                        <div class="col-12">
+                            <label for="amount" class="form-label">Image</label>
                             <div class="input-group form-group"> <span class="input-group-text bg-transparent"><i class="bx bxs-coin-stack"></i></span>
-                                <input type="text" name="price" value="{{ old('price',$package->price) }}" class="form-control border-start-0  @error('price')
+                                <input type="file" name="image"  onchange="imagePreview(event)" class="form-control border-start-0  @error('image')
                                 {{ "is-invalid" }}
-                               @enderror" placeholder="Package Price"   title="Star!" required>
+                               @enderror" >
 
                             </div>
 
-                            @error('price')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
-
-                        </div>
-                        <div class="col-12">
-                            <label for="amount" class="form-label">Validity(In days)</label>
-                            <div class="input-group form-group">
-                                <input type="text" name="validity" placeholder="Package Validity in days" value="{{ old('validity',$package->validity) }}" class="form-control border-start-0  @error('validity')
-                                {{ "is-invalid" }}
-                               @enderror"   title="Validity" required>
-
-                            </div>
-                            @error('validity')
+                            @error('image')
                             <span class="text-danger">{{ $message }}</span>
                           @enderror
 
                         </div>
 
-                        <div class="col-12">
-                            <label for="amount" class="form-label">Device Limit</label>
-                            <div class="input-group form-group">
-                                <input type="text" name="device_limit" value="{{ old('device_limit',$package->device_limit) }}" placeholder="Device Limit" class="form-control border-start-0  @error('device_limit')
-                                {{ "is-invalid" }}
-                               @enderror"   title="Validity" required>
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
 
                             </div>
-
-                            @error('device_limit')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
-
+                            <div class="col-sm-9 text-secondary">
+                                <img id="preview" style="width: 80px; height:80px" src="{{ route('public.image',['folder'=>'testimonials','image'=>$item->image]) }}" >
+                            </div>
                         </div>
 
 
 
-                                        <div class="col-12 mt-3">
-                        <div class="form-check form-switch">
-                                    <input type="hidden" name="status" value="0">
-									<input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked name="status" value="1">
 
-
-								</div>
-                        </div>
             <div class="col-12 mt-3">
-                <button type="submit" class="btn btn-info text-light px-5"> <i class="bx bxs-send"></i>Update Device Package</button>
+                <button type="submit" class="btn btn-info text-light px-5"> <i class="bx bxs-send"></i>{{ "Update ".ucwords($item->client_name).' '.'Testimonial' }}</button>
             </div>
                     </div>
 
@@ -146,56 +133,41 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
 
+function imagePreview(event)
+{
+  if(event.target.files.length>0){
+    var src=URL.createObjectURL( event.target.files[0]);
+    let preview=document.getElementById('preview');
+    preview.src=src;
+  }
+}
 
 
-
-			$('#transfe').validate({
+			$('#transfer').validate({
 				rules: {
-                     name: {
+                     client_name: {
+						required: true,
+                        maxlength:50,
+                        minlength:3,
+
+					},
+                    company_name: {
 						required: true,
                         maxlength:50,
                         minlength:3,
 
 					},
 
-					price: {
-						required: true,
-                        digits:true,
 
-					},
-                    star:{
+                   quote:{
                         required:true,
-                        digits:true,
-                        max:7,
-                        min:1
-                    },
-                    validity:{
-                        required:true,
-                        digits:true,
-                        min:1,
 
                     },
-                    device_limit:{
-                        required:true,
-                        digits:true,
-                        min:1,
-                    }
+
 
 				},
 
-				messages: {
-                    name: {
-						required: 'Please Type Device Package Name',
 
-					},
-					price: {
-						required: 'Please Type price Amount !',
-                        digits:'Please type price amount in digits'
-
-
-					},
-
-				},
 				errorElement: 'span',
 				errorPlacement: function(error, element) {
 					error.addClass('invalid-feedback');

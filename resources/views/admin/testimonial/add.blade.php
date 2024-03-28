@@ -163,7 +163,7 @@ function imagePreview(event)
 
 
 					},
-                   quotation:{
+                   quote:{
                         required:true,
 
                     },
