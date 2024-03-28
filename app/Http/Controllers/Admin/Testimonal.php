@@ -24,6 +24,7 @@ class Testimonal extends Controller
             "client_name" => ['required', 'string', 'max:255', 'min:3'],
             "image" => ['nullable', 'image', 'mimes:png,jpg', 'max:3096'],
             "quote" => ["rquired", 'string', 'max:255', 'min:3'],
+            "company_name" => ["required", 'string', 'max:255'],
 
         ]);
 
@@ -50,6 +51,7 @@ class Testimonal extends Controller
                 'client_name' => $request->client_name,
                 'image' => $image_url,
                 'quote' => $request->quote,
+                'company_name' => $request->company_name,
             ]);
             return redirect()->back()->with(['toast-type'=>'success','toast-message'=>'Testimonal Added Successfully!']);
         }catch(\Exception $e){

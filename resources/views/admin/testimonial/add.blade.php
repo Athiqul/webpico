@@ -71,9 +71,22 @@ Add Testimonial| WebPico
                         </div>
 
                         <div class="col-12">
+                            <label for="amount" class="form-label">Company Name:</label>
+                            <div class="input-group form-group">
+                                <input type="text" name="company_name" value="{{ old('company_name') }}" class="form-control border-start-0  @error('company_name')
+                                {{ "is-invalid" }}
+                               @enderror" placeholder="Company Name"   title="Company Name!" required>
+
+                            </div>
+                            @error('company_name')
+                            <span class="text-danger">{{ $message }}</span>
+                          @enderror
+
+                        </div>
+                        <div class="col-12">
                             <label for="amount" class="form-label">Image</label>
                             <div class="input-group form-group"> <span class="input-group-text bg-transparent"><i class="bx bxs-coin-stack"></i></span>
-                                <input type="file" name="image"  class="form-control border-start-0  @error('image')
+                                <input type="file" name="image"  onchange="imagePreview(event)" class="form-control border-start-0  @error('image')
                                 {{ "is-invalid" }}
                                @enderror" required>
 
@@ -83,6 +96,15 @@ Add Testimonial| WebPico
                             <span class="text-danger">{{ $message }}</span>
                           @enderror
 
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-sm-3">
+
+                            </div>
+                            <div class="col-sm-9 text-secondary">
+                                <img id="preview" style="width: 80px; height:80px" src="{{ asset('assets/images/no_image.jpg') }}" >
+                            </div>
                         </div>
 
 
@@ -111,12 +133,25 @@ Add Testimonial| WebPico
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script>
 
-
+function imagePreview(event)
+{
+  if(event.target.files.length>0){
+    var src=URL.createObjectURL( event.target.files[0]);
+    let preview=document.getElementById('preview');
+    preview.src=src;
+  }
+}
 
 
 			$('#transfer').validate({
 				rules: {
                      client_name: {
+						required: true,
+                        maxlength:50,
+                        minlength:3,
+
+					},
+                    company_name: {
 						required: true,
                         maxlength:50,
                         minlength:3,
