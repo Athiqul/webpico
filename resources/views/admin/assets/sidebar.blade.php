@@ -62,6 +62,19 @@
         </li>
 
         <li>
+            <a href="{{ route('admin.social.list') }}" class="has-arrow">
+                <div class="parent-icon"><i class="bx bx-category"></i>
+                </div>
+                <div class="menu-title">Social Media</div>
+            </a>
+            <ul>
+
+
+
+            </ul>
+        </li>
+
+        <li>
             <a href="javascript:;" class="has-arrow">
                 <div class="parent-icon"><i class="bx bx-category"></i>
                 </div>

@@ -36,9 +36,11 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     });
 
     Route::controller(SocialMedia::class)->group(function (){
+        Route::get('social-media-add','add')->name('admin.social.add');
+        Route::post('social-media-add','store');
       Route::get('social-media','index')->name('admin.social.list');
       Route::get('social-media/{id}','edit')->name('admin.social.edit');
-      Route::post('social-media/{id}','update');
+      Route::put('social-media/{id}','update');
       Route::get('social-media-status-change/{id}','statusChange')->name('admin.social.status');
     });
 

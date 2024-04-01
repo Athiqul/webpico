@@ -59,7 +59,7 @@ Update {{ ucwords($item->name) }} Social Media| WebPico
                         <div class="col-12">
                             <label for="amount" class="form-label">Link:</label>
                             <div class="input-group form-group">
-                                <input type="text" name="link" value="{{ old('link',$item->name) }}" class="form-control border-start-0  @error('link')
+                                <input type="text" name="link" value="{{ old('link',$item->link) }}" class="form-control border-start-0  @error('link')
                                 {{ "is-invalid" }}
                                @enderror" placeholder="Social Media Link"   title="Social Media Link!" required>
 
