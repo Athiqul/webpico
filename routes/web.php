@@ -1,16 +1,16 @@
 <?php
 
+use App\Http\Controllers\Admin\Contact;
 use App\Http\Controllers\Admin\Testimonal;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\Home;
 use Illuminate\Support\Facades\Route;
 
 
 //Public image
 Route::get('image/{folder}/{image}',[Testimonal::class,'image'])->name('public.image');
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[Home::class,'index'])->name('web.home');
 
 Route::get('/dashboard', function () {
     return view('admin.home');
@@ -27,6 +27,11 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('testimonal-status-change/{id}','statusChange')->name('admin.testimonial.status');
         Route::get('testimonal-list','index')->name('admin.testimonial.list');
 
+    });
+
+    Route::controller(Contact::class)->group(function (){
+      Route::get('contact','index')->name('admin.contact');
+      Route::post('contact','update');
     });
 
 });

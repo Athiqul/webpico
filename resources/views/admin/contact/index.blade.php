@@ -35,9 +35,9 @@
                 <hr>
                 <div class="card" data-select2-id="24">
                     <div class="card-body" data-select2-id="23">
-                        <form method="POST" action="{{ route('admin.game.update', $game->id) }}">
+                        <form method="POST" action="{{ route('admin.contact') }}">
                             @csrf
-                            @method('PATCH')
+
                             <div class="border p-3 rounded" data-select2-id="22">
 
 
