@@ -1,7 +1,7 @@
 @extends('admin.layout.master_layout')
 
 @section('title')
-Update {{ ucwords($item->client_name) }} Testimonial| WebPico
+Update {{ ucwords($item->name) }} Social Media| WebPico
 @endsection
 
 @section('need-css')
@@ -16,13 +16,13 @@ Update {{ ucwords($item->client_name) }} Testimonial| WebPico
 <div class="page-content" data-select2-id="27">
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3">{{ "Update ".ucwords($item->client_name).' '.'Testimonial' }}</div>
+        <div class="breadcrumb-title pe-3">{{ "Update ".ucwords($item->name).' '.'Social Media' }}</div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
-                    <li class="breadcrumb-item"><a href="{{ route('admin.testimonial.list') }}"><i class="bx bx-home-alt"></i></a>
+                    <li class="breadcrumb-item"><a href="{{ route('admin.social.list') }}"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">{{ "Update ".ucwords($item->client_name).' '.'Testimonial' }}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ "Update ".ucwords($item->name).' '.'Social Media' }}</li>
                 </ol>
             </nav>
         </div>
@@ -31,87 +31,55 @@ Update {{ ucwords($item->client_name) }} Testimonial| WebPico
     <!--end breadcrumb-->
     <div class="row" data-select2-id="26">
         <div class="col-xl-9 mx-auto" data-select2-id="25">
-            <h6 class="mb-0 text-uppercase">{{ "Update ".ucwords($item->client_name).' '.'Testimonial' }}</h6>
+            <h6 class="mb-0 text-uppercase">{{ "Update ".ucwords($item->name).' '.'Social Media' }}</h6>
             <hr>
             <div class="card" data-select2-id="24">
                 <div class="card-body" data-select2-id="23">
-                   <form method="POST" action="{{ route('admin.testimonial.edit',encrypt($item->id)) }}" id="transfer" enctype="multipart/form-data">
+                   <form method="POST" action="{{ route('admin.social.edit',encrypt($item->id)) }}" id="transfer">
                     @csrf
                     @method('PUT')
                     <div class="border p-3 rounded" data-select2-id="22">
 
 
                         <div class="col-12">
-                            <label for="amount" class="form-label">Client Name</label>
+                            <label for="amount" class="form-label">Name</label>
                             <div class="input-group form-group ">
-                                <input type="text" name="client_name" value="{{ old('client_name',$item->client_name) }}" class="form-control border-start-0  @error('client_name')
+                                <input type="text" name="name" value="{{ old('name',$item->name) }}" class="form-control border-start-0  @error('name')
                                 {{ "is-invalid" }}
-                               @enderror" placeholder="Client Name"  title="Client Name" required>
+                               @enderror" placeholder="Social Media Name"  title="Social Media Name" required>
 
                             </div>
 
-                            @error('client_name')
+                            @error('name')
                             <span class="text-danger">{{ $message }}</span>
                           @enderror
 
                         </div>
 
                         <div class="col-12">
-                            <label for="amount" class="form-label">Quote:</label>
+                            <label for="amount" class="form-label">Link:</label>
                             <div class="input-group form-group">
-                                <input type="text" name="quote" value="{{ old('quote',$item->client_name) }}" class="form-control border-start-0  @error('quote')
+                                <input type="text" name="link" value="{{ old('link',$item->name) }}" class="form-control border-start-0  @error('link')
                                 {{ "is-invalid" }}
-                               @enderror" placeholder="Quotaion of clients"   title="Quotation!" required>
+                               @enderror" placeholder="Social Media Link"   title="Social Media Link!" required>
 
                             </div>
-                            @error('quote')
+                            @error('link')
                             <span class="text-danger">{{ $message }}</span>
                           @enderror
 
                         </div>
 
-                        <div class="col-12">
-                            <label for="amount" class="form-label">Company Name:</label>
-                            <div class="input-group form-group">
-                                <input type="text" name="company_name" value="{{ old('company_name',$item->company_name) }}" class="form-control border-start-0  @error('company_name')
-                                {{ "is-invalid" }}
-                               @enderror" placeholder="Company Name"   title="Company Name!" required>
 
-                            </div>
-                            @error('company_name')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
 
-                        </div>
-                        <div class="col-12">
-                            <label for="amount" class="form-label">Image</label>
-                            <div class="input-group form-group"> <span class="input-group-text bg-transparent"><i class="bx bxs-coin-stack"></i></span>
-                                <input type="file" name="image"  onchange="imagePreview(event)" class="form-control border-start-0  @error('image')
-                                {{ "is-invalid" }}
-                               @enderror" >
 
-                            </div>
 
-                            @error('image')
-                            <span class="text-danger">{{ $message }}</span>
-                          @enderror
-
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-sm-3">
-
-                            </div>
-                            <div class="col-sm-9 text-secondary">
-                                <img id="preview" style="width: 80px; height:80px" src="{{ route('public.image',['folder'=>'testimonials','image'=>$item->image]) }}" >
-                            </div>
-                        </div>
 
 
 
 
             <div class="col-12 mt-3">
-                <button type="submit" class="btn btn-info text-light px-5"> <i class="bx bxs-send"></i>{{ "Update ".ucwords($item->client_name).' '.'Testimonial' }}</button>
+                <button type="submit" class="btn btn-info text-light px-5"> <i class="bx bxs-send"></i>{{ "Update ".ucwords($item->name).' '.'Social Media' }}</button>
             </div>
                     </div>
 
@@ -145,13 +113,7 @@ function imagePreview(event)
 
 			$('#transfer').validate({
 				rules: {
-                     client_name: {
-						required: true,
-                        maxlength:50,
-                        minlength:3,
-
-					},
-                    company_name: {
+                     name: {
 						required: true,
                         maxlength:50,
                         minlength:3,
@@ -159,7 +121,8 @@ function imagePreview(event)
 					},
 
 
-                   quote:{
+
+                   link:{
                         required:true,
 
                     },

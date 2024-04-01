@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Contact;
+use App\Http\Controllers\Admin\SocialMedia;
 use App\Http\Controllers\Admin\Testimonal;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\Home;
@@ -32,6 +33,13 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::controller(Contact::class)->group(function (){
       Route::get('contact','index')->name('admin.contact');
       Route::post('contact','update');
+    });
+
+    Route::controller(SocialMedia::class)->group(function (){
+      Route::get('social-media','index')->name('admin.social.list');
+      Route::get('social-media/{id}','edit')->name('admin.social.edit');
+      Route::post('social-media/{id}','update');
+      Route::get('social-media-status-change/{id}','statusChange')->name('admin.social.status');
     });
 
 });

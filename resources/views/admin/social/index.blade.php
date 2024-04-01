@@ -1,7 +1,7 @@
 @extends('admin.layout.master_layout')
 
 @section('title')
-    Testimonial List| WebPico
+    Social Media List| WebPico
 @endsection
 
 @section('need-css')
@@ -17,13 +17,13 @@
 
     <!--breadcrumb-->
     <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-        <div class="breadcrumb-title pe-3"> Testimonial List </div>
+        <div class="breadcrumb-title pe-3"> Social Media List </div>
         <div class="ps-3">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb mb-0 p-0">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="bx bx-home-alt"></i></a>
                     </li>
-                    <li class="breadcrumb-item active" aria-current="page">Testimonial List</li>
+                    <li class="breadcrumb-item active" aria-current="page">Social Media List</li>
                 </ol>
             </nav>
         </div>
@@ -32,7 +32,7 @@
     <!--end breadcrumb-->
     <div class="row" data-select2-id="26">
         <div class="col-xl-12 mx-auto" data-select2-id="25">
-            <h6 class="mb-0 text-uppercase">Testimonial List</h6>
+            <h6 class="mb-0 text-uppercase">Social Media List</h6>
             <hr>
             <div class="card" data-select2-id="24">
                 <div class="card-body" data-select2-id="23">
@@ -43,21 +43,21 @@
 
                         <div class="col">
                             <!-- Button trigger modal -->
-                            <a href="{{ route('admin.testimonial.add') }}" class="btn btn-primary">Add Testomonial</a>
+                            <a href="{{ route('admin.social.add') }}" class="btn btn-primary">Add Social Media</a>
                             <!-- Modal -->
 
 
                             <div class="card mt-3">
 
-                                <h2 class="text-center mt-3">Active Testimonial List</h2>
+                                <h2 class="text-center mt-3"> Social Media List</h2>
                                 <div class="card-body">
                                     <table class="table mb-0">
                                         <thead class="table-dark">
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Client Name</th>
-                                                <th scope="col">Company Name</th>
-                                                <th scope="col">Image</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Link</th>
+
                                                 <th scope="col">Last Updated</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Action</th>
@@ -69,15 +69,15 @@
 
                                                 <tr>
                                                     <th scope="row"><?= ++$key ?></th>
-                                                    <td>{{ $item->client_name }}</td>
-                                                    <td>{{ $item->company_name }}</td>
-                                                    <td><img src="{{ $item->image==null?asset('assets/images/no_image.jpg') : route('public.image',['folder'=>'testimonials','image'=>$item->image]) }}" width="50px" height="50px" alt="{{ $item->client_name  }}'s image"></td>
+                                                    <td>{{ $item->name }}</td>
+                                                    <td>{{ $item->link }}</td>
+
                                                     <td>{{ $item->updated_at->diffForHumans() }}</td>
                                                     <td> <span class="badge rounded bg-{{ $item->status==1?'success':'danger' }}">{{ $item->status==1?'Active':'Inactive' }}</span> </td>
 
                                                     <td>
-                                                        <a href="{{ route('admin.testimonial.edit',encrypt($item->id)) }}" class="btn btn-info"><i class="fadeIn animated bx bx-pencil"></i></a>
-                                                        <a href="{{ route('admin.testimonial.status',encrypt($item->id)) }}" class="status btn {{ $item->status==1?'btn-danger':'btn-success' }}"><i class="fadeIn animated bx bx-{{   $item->status == "1" ? 'x' : 'check' }}"></i></a>
+                                                        <a href="{{ route('admin.social.edit',encrypt($item->id)) }}" class="btn btn-info"><i class="fadeIn animated bx bx-pencil"></i></a>
+                                                        <a href="{{ route('admin.social.status',encrypt($item->id)) }}" class="status btn {{ $item->status==1?'btn-danger':'btn-success' }}"><i class="fadeIn animated bx bx-{{   $item->status == "1" ? 'x' : 'check' }}"></i></a>
                                                     </td>
                                                 </tr>
 
@@ -123,7 +123,7 @@
 
             Swal.fire({
                 title: 'Are you sure?',
-                text: "Change status of this client testimonial?",
+                text: "Change status of this Social Media?",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
