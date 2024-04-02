@@ -211,7 +211,8 @@ Webpico | Data Driven SEO & Digital marketing agency.
     </div>
 </section>
 <!-- Featured End -->
-
+@include('web.assets.testimonials')
+@include('web.assets.latest')
 @endsection
 
 

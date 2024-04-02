@@ -5,7 +5,7 @@
         <p class="description">Check our latest blog posts</p>
     </div>
     <div class="relative mb-10">
-        <img class="max-h-[37rem] hidden md:block w-screen px-5 md:px-0" src="./assets/article.jpeg" alt="">
+        <img class="max-h-[37rem] hidden md:block w-screen px-5 md:px-0" src="{{ asset('src/assets/article.jpeg') }}" alt="">
         <div class="bg-white block md:absolute px-10 pt-16 pb-8 top-0 left-5 md:left-20 max-w-[29.38rem] ">
             <p class="font-montserrat text-base md:text-xl text-neutral font-medium">FEATURED ARTICLE</p>
             <p class="font-montserrat font-bold text-xl md:text-2xl text-primary">The Evolution of Web Development:
