@@ -32,10 +32,14 @@
             <div class="max-w-[14.63rem]">
                 <h2 class="font-montserrat font-medium text-xl text-primary">Socials</h2>
                 <ul class="pt-5 font-sans text-neutral space-y-3">
-                    <li class=""><a href="" class="">Facebook</a></li>
-                    <li class=""><a href="" class="">Twitter</a></li>
-                    <li class=""><a href="" class="">Linkedin</a></li>
-                    <li class=""><a href="" class="">Dribble</a></li>
+                    @php
+                        $items=\App\Models\SocialMedia::where('status','1')->get();
+                    @endphp
+                    @foreach ($items as $item)
+                    <li class=""><a href="{{ $item->link }}" target="_blank" class="">{{ $item->name }}</a></li>
+                    @endforeach
+
+
                 </ul>
             </div>
             <img onclick="scrollToTop()" class="h-9 w-9 absolute right-3 -bottom-3 cursor-pointer" src="{{ asset('src/assets/scroll-top.svg') }}" alt="">
