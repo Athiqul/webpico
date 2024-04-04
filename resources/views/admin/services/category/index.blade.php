@@ -43,8 +43,9 @@
 
                             <div class="col">
                                 <!-- Button trigger modal -->
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#exampleVerticallycenteredModal">Add Category</button>
+                                <button type="button" class="btn btn-primary" onclick="addOpenModal()">Add
+                                    Category</button>
+
                                 <!-- Modal -->
 
 
@@ -71,32 +72,17 @@
         <!--end row-->
     </div>
 
-    {{-- Add Modal --}}
-    <div class="modal fade" id="exampleVerticallycenteredModal" tabindex="-1" style="display: none;" aria-hidden="true">
+    {{--  Modal --}}
+    <div class="modal " id="exampleVerticallycenteredModal" tabindex="-1" style="display: none;" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add Category For Services</h5>
-                    <button type="button" id="closeModal" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="modalTitle">Add Category For Services</h5>
+                    <button type="button" id="closeModal" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <form method="POST" enctype="multipart/form-data" onsubmit="addCategory(event)">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Category Name</label>
-                            <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter Category Name">
-                            <span class="text-danger" id="nameError"></span>
-                        </div>
+                <div class="modal-body" id="modalBody">
 
-
-                        <div class="mb-3">
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Add Service Category</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>
@@ -143,7 +129,8 @@
                                                 <td>${ item.slug }</td>
 
                                                 <td>${ item.updated_at }</td>
-                                                <td data-id=${item.id}>Edit</td>
+                                                <td >
+                                                    <button type="button" data-id=${item.id} class="btn btn-primary" onclick="editCategory(${item.id})">Edit</button>
                                                 </tr>
                             `;
                         });
@@ -156,7 +143,119 @@
 
             showRecords();
 
+
+            //Edit Category
+            function editCategory(id) {
+
+                axios.get("/api/services-categories-update/"+id).then(function (response){
+                    if(response.data.error){
+                        console.log(response.data.error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: response.data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        return ;
+                    }
+                    console.log(response.data.payload);
+                    let modalTitle = document.getElementById("modalTitle");
+                let modalBody = document.getElementById("modalBody");
+                modalTitle.innerText = "Edit Category";
+
+                modalBody.innerHTML = `<form method="POST" enctype="multipart/form-data" onsubmit="updateCategory(event,${id})">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Category Name</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Enter Category Name" value="${response.data.payload.name}">
+                            <span class="text-danger" id="nameError"></span>
+                        </div>
+
+
+                        <div class="mb-3">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update Service Category</button>
+                        </div>
+                    </form>`
+                $("#exampleVerticallycenteredModal").modal("show");
+                });
+
+
+             return;
+
+
+            }
+
+            //Update Category function
+
+            function updateCategory(event,id) {
+                event.preventDefault();
+                let name = document.getElementById("name").value;
+                let nameError = document.getElementById('nameError');
+
+
+
+                if (name.length < 3 || name.length > 255) {
+                    nameError.innerText = 'Name must be at least 255 characters Or greater then 3 characters';
+                    return;
+                }
+
+                axios.post("/api/services-categories-update/"+id,{
+                    name:name,
+                }).then(function (response){
+                    if(response.data.error){
+                        console.log(response.data.error);
+                        Swal.fire({
+                            icon: 'error',
+                            title: response.data.message,
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+
+                        return ;
+                    }
+
+                    Swal.fire({
+                        icon:'success',
+                        title: response.data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    $("#exampleVerticallycenteredModal").modal("hide");
+                    showRecords();
+                });
+            }
             //Add Category function
+            function addOpenModal() {
+                let modalTitle = document.getElementById("modalTitle");
+                let modalBody = document.getElementById("modalBody");
+                modalTitle.innerText = "Add Category For Services";
+                modalBody.innerHTML = `<form method="POST" enctype="multipart/form-data" onsubmit="addCategory(event)">
+                        @csrf
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Category Name</label>
+                            <input type="text" class="form-control" id="name" name="name"
+                                placeholder="Enter Category Name">
+                            <span class="text-danger" id="nameError"></span>
+                        </div>
+
+
+                        <div class="mb-3">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Add Service Category</button>
+                        </div>
+                    </form>`
+                $("#exampleVerticallycenteredModal").modal("show");
+
+                return;
+            }
+
             function addCategory(event) {
                 event.preventDefault();
                 let nameError = document.getElementById('nameError');
@@ -179,9 +278,9 @@
                             showConfirmButton: false,
                             timer: 1500
                         });
-                       document.getElementById('closeModal').click();
-                       name.value='';
-                       nameError.innerText='';
+                        document.getElementById('closeModal').click();
+                        name.value = '';
+                        nameError.innerText = '';
                         showRecords();
 
                     } else {

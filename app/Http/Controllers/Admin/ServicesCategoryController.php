@@ -45,20 +45,14 @@ class ServicesCategoryController extends Controller
 
     }
 
-    //edit Testimonal
     public function edit($id)
     {
-        try {
-
-           $id=decrypt($id);
-           $item=ServicesCategory::findOrFail($id);
-
-        }
-        catch(\Exception $e)
+        $item=ServicesCategory::find($id);
+        if(!$item)
         {
-            dd($e->getMessage());
-
+            return response()->json(['error' =>true, "message" => "Category not found!"]);
         }
+        return response()->json(['error'=>false,'payload'=>$item]);
     }
 
     public function update(Request $request, $id)
@@ -66,42 +60,54 @@ class ServicesCategoryController extends Controller
           try{
             $validate = Validator::make($request->all(), [
                 "name" => ['required', 'string', 'max:255', 'min:3'],
-            "link" => ['required','max:255'],
 
             ]);
 
-            if ($validate->failed()) {
-                return redirect()->back()->withErrors($validate->errors())->withInput();
+            if ($validate->fails()) {
+                return response()->json([
+                    "error" =>true,
+                    "message" => "invalid Category Name!",
+                ]);
             }
 
-            $id=decrypt($id);
             $item=ServicesCategory::findOrFail($id);
 
            //Check name is uniqu or not
            $checkName=ServicesCategory::where('name','=',$item->name)->where('id','!=',$id)->first();
            if($checkName)
            {
-               return redirect()->back()->with(['toast-type'=>'warning','toast-message'=>'Name Already Exist']);
+               return response()->json([
+                   "error" =>true,
+                   "message" => "Name Already Exist",
+               ]);
            }
 
 
             $item->name=$request->name;
-            $item->link=$request->link;
 
 
             if($item->isClean())
             {
-                return redirect()->back()->with(['toast-type'=>'info','toast-message'=>'Nothing to update!']);
+                return response()->json([
+                    "error" =>true,
+                    "message" => "Nothing to update!",
+                ]);
             }
 
             $item->save();
 
-            return redirect()->back()->with(['toast-type'=>'success','toast-message'=>'Socail Media has been updated!']);
+            return response()->json([
+                "error" =>false,
+                "message" => "Services Category Updated Successfully",
+            ]);
           }catch(\Exception $e)
 
           {
             dd($e->getMessage());
-            return redirect()->back()->with(['toast-type'=>'danger','toast-message'=>'Something went wrong!']);
+            return response()->json([
+                "error" =>true,
+                "message" => "Something went wrong!",
+            ]);
           }
     }
 
