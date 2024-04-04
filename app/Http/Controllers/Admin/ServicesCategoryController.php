@@ -14,15 +14,30 @@ class ServicesCategoryController extends Controller
     public function store(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            "name" => ['required', 'string', 'max:255', 'min:3','unique:social_media,name'],
-            "link" => ['required','max:255'],
+            "name" => ['required', 'string', 'max:255', 'min:3','unique:services_categories,name'],
 
 
         ]);
 
-        if ($validate->failed()) {
-
+        if ($validate->fails()) {
+              return response()->json([
+                "error" =>true,
+                "message" => $validate->errors(),
+              ]);
         }
+
+
+         ServicesCategory::create(
+            [
+                "name"=>$request->name,
+                "slug"=>str_replace(' ','_', strtolower($request->name)),
+            ]
+         );
+
+         return response()->json([
+            "error" =>false,
+            "message" => "Services Category Created Successfully",
+         ]);
 
 
 
@@ -101,6 +116,11 @@ class ServicesCategoryController extends Controller
         );
     }
 
+
+    public function showServiceCategoryPage()
+    {
+        return view('admin.services.category.index');
+    }
 
 
 }

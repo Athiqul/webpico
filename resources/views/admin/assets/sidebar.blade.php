@@ -42,7 +42,13 @@
             </a>
             <ul>
 
+                <li>
+                    <a href="{{ route('admin.service.category') }}" >
 
+                       Services Category
+                    </a>
+
+                </li>
 
 
 

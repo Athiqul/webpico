@@ -9,3 +9,4 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::get('services-categories',[ServicesCategoryController::class,'index'])->name('services_categories.api');
+Route::post('services-categories-add',[ServicesCategoryController::class,'store'])->name('services_categories.store.api');

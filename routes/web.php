@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Contact;
+use App\Http\Controllers\Admin\ServicesCategoryController;
 use App\Http\Controllers\Admin\SocialMedia;
 use App\Http\Controllers\Admin\Testimonal;
 use App\Http\Controllers\ProfileController;
@@ -43,6 +44,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
       Route::put('social-media/{id}','update');
       Route::get('social-media-status-change/{id}','statusChange')->name('admin.social.status');
     });
+
+///Services category controller
+    Route::get('services-category',[ServicesCategoryController::class,'showServiceCategoryPage'])->name('admin.service.category');
 
 });
 
