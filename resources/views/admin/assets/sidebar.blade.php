@@ -49,7 +49,7 @@
                 </li>
 
 
-                <li> <a  title="" ><i class="bx bx-right-arrow-alt"></i>Services SubCategory</a>
+                <li> <a  href="{{ route('admin.service.subcategory') }}" title="" ><i class="bx bx-right-arrow-alt"></i>Services SubCategory</a>
                 </li>
 
                 <li> <a  title="" ><i class="bx bx-right-arrow-alt"></i>Services List</a>

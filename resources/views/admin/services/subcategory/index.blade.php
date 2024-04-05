@@ -44,7 +44,7 @@
                             <div class="col">
                                 <!-- Button trigger modal -->
                                 <button type="button" class="btn btn-primary" onclick="addOpenModal()">Add
-                                    Category</button>
+                                    SubCategory</button>
 
                                 <!-- Modal -->
 
@@ -87,86 +87,108 @@
             </div>
         </div>
     </div>
-    @endsection
+@endsection
 
 
-    @section('need-js')
-        <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
-        <script src="{{ asset('assets/js/validate.min.js') }}"></script>
-        <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
-        <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
-        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <script src="{{ asset('moment.min.js') }}"></script>
-        <script>
-            //Validation
+@section('need-js')
+    <script src="{{ asset('assets/plugins/select2/js/select2.min.js') }}"></script>
+    <script src="{{ asset('assets/js/validate.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/lobibox.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/notifications/js/notifications.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('moment.min.js') }}"></script>
+    <script>
+        //Validation
 
-            function showRecords() {
-                let showRecords = document.getElementById('showRecords');
+        function showRecords() {
+            let showRecords = document.getElementById('showRecords');
 
 
-                axios.get("{{ route('services_categories.api') }}").then(function(res) {
-                    console.log(res.data);
-                    if (res.data.length < 1) {
-                        showRecords.innerHTML = `<div class="alert alert-danger" role="alert">No Data Found</div>`;
-                    } else {
-                        let html = `<table class="table mb-0">
+            axios.get("{{ route('services_sub_categories.api') }}").then(function(res) {
+                console.log(res.data);
+                if (res.data.length < 1) {
+                    showRecords.innerHTML = `<div class="alert alert-danger" role="alert">No Data Found</div>`;
+                } else {
+                    let html = `<table class="table mb-0">
                                     <thead class="table-dark">
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">name</th>
-                                            <th scope="col">slug</th>
-
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Slug</th>
+                                            <th scope="col">Category</th>
                                             <th scope="col">Last Updated</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
                                     <tbody>`;
 
-                        res.data.forEach(function(item, key) {
-                            html += `
+                    res.data.forEach(function(item, key) {
+                        html += `
                             <tr>
                                                 <th scope="row">${++key}</th>
                                                 <td>${ item.name }</td>
                                                 <td>${ item.slug }</td>
-
+                                                <td>${ item.category }</td>
                                                 <td>${ moment(item.updated_at).format('Do MMMM YY, h:mm:ss a') }</td>
                                                 <td >
                                                     <button type="button" data-id=${item.id} class="btn btn-primary" onclick="editCategory(${item.id})">Edit</button>
                                                 </tr>
                             `;
-                        });
+                    });
 
-                        showRecords.innerHTML = html + `</tbody> </table>`;
+                    showRecords.innerHTML = html + `</tbody> </table>`;
 
-                    }
-                });
-            }
+                }
+            });
+        }
 
-            showRecords();
+        showRecords();
 
 
-            //Edit Category
-            function editCategory(id) {
+        //Edit Category
+        function editCategory(id) {
 
-                axios.get("/api/services-categories-update/"+id).then(function (response){
-                    if(response.data.error){
-                        console.log(response.data.error);
+            axios.get("/api/services-sub-categories-update/" + id).then(function(response) {
+                if (response.data.error) {
+                    console.log(response.data.error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: response.data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+
+                    return;
+                }
+                //console.log(response.data.payload);
+                axios.get("/api/services-categories").then(function(res) {
+                    if (res.data.length < 1) {
+
                         Swal.fire({
                             icon: 'error',
-                            title: response.data.message,
+                            title: 'Please Add Category First!',
                             showConfirmButton: false,
                             timer: 1500
                         });
 
-                        return ;
-                    }
-                    console.log(response.data.payload);
-                    let modalTitle = document.getElementById("modalTitle");
-                let modalBody = document.getElementById("modalBody");
-                modalTitle.innerText = "Edit Category";
 
-                modalBody.innerHTML = `<form method="POST" enctype="multipart/form-data" onsubmit="updateCategory(event,${id})">
+                        $("#exampleVerticallycenteredModal").modal("hide");
+
+                        return;
+                    };
+
+
+                    let option = '';
+                    res.data.forEach(function(item, key) {
+                        option +=
+                            `<option value="${item.id}" ${item.id==response.data.payload.category_id?'selected':''}>${item.name}</option>`;
+                    });
+                    let modalTitle = document.getElementById("modalTitle");
+                    let modalBody = document.getElementById("modalBody");
+                    modalTitle.innerText = "Edit Sub Category";
+
+                    modalBody.innerHTML = `<form method="POST"  onsubmit="updateCategory(event,${id})">
                         @csrf
                         <div class="mb-3">
                             <label for="name" class="form-label">Category Name</label>
@@ -175,7 +197,14 @@
                             <span class="text-danger" id="nameError"></span>
                         </div>
 
-
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Select Category</label>
+                            <select  class="form-control" id="category_id" name="category_id"
+                              >
+                                ${option}
+                                </select>
+                            <span class="text-danger" id="category"></span>
+                        </div>
                         <div class="mb-3">
                         </div>
                         <div class="modal-footer">
@@ -183,149 +212,228 @@
                             <button type="submit" class="btn btn-primary">Update Service Category</button>
                         </div>
                     </form>`
-                $("#exampleVerticallycenteredModal").modal("show");
+                    $("#exampleVerticallycenteredModal").modal("show");
                 });
 
 
-             return;
+                return;
+            });
+
+        }
+
+        //Update Category function
+
+        function updateCategory(event, id) {
+            event.preventDefault();
+            let name = document.getElementById("name").value;
+            let category_id = document.getElementById("category_id").value;
+            let nameError = document.getElementById('nameError');
+            let categoryError = document.getElementById('category');
 
 
+
+            if (name.length < 3 || name.length > 255) {
+                nameError.innerText = 'Name must be at least 255 characters Or greater then 3 characters';
+                return;
+            } else if (category_id == "") {
+                nameError.innerText = 'Please select a category';
+                return;
             }
 
-            //Update Category function
-
-            function updateCategory(event,id) {
-                event.preventDefault();
-                let name = document.getElementById("name").value;
-                let nameError = document.getElementById('nameError');
-
-
-
-                if (name.length < 3 || name.length > 255) {
-                    nameError.innerText = 'Name must be at least 255 characters Or greater then 3 characters';
-                    return;
-                }
-
-                axios.post("/api/services-categories-update/"+id,{
-                    name:name,
-                }).then(function (response){
-                    if(response.data.error){
-                        console.log(response.data.error);
+            axios.post("/api/services-sub-categories-update/" + id, {
+                name: name,
+                category_id: category_id,
+            }).then(function(response) {
+                if (response.data.error) {
+                    console.log(response.data.error);
+                    if (typeof response.data.message == 'string') {
                         Swal.fire({
                             icon: 'error',
                             title: response.data.message,
                             showConfirmButton: false,
                             timer: 1500
                         });
+                    } else {
+                        for (field in response.data.message) {
+                            if (response.data.message.hasOwnProperty(field)) {
+                                let items = response.data.message[field];
+                                items.forEach(function(errorMessage) {
+                                    if (field.toLowerCase() === "name") {
+                                        nameError.innerText = errorMessage;
+                                    } else {
+                                        categoryError.innerText = errorMessage;
+                                    }
+                                });
+                            }
+                        }
 
-                        return ;
                     }
 
+
+                    return;
+                }
+
+                Swal.fire({
+                    icon: 'success',
+                    title: response.data.message,
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                $("#exampleVerticallycenteredModal").modal("hide");
+                showRecords();
+            });
+        }
+        //Add Category function
+        function addOpenModal() {
+
+            //Get Category List
+            axios.get("/api/services-categories").then(function(response) {
+                if (response.data.length < 1) {
+
                     Swal.fire({
-                        icon:'success',
-                        title: response.data.message,
+                        icon: 'error',
+                        title: 'Please Add Category First!',
                         showConfirmButton: false,
                         timer: 1500
                     });
+
+
                     $("#exampleVerticallycenteredModal").modal("hide");
-                    showRecords();
+
+                    return;
+                }
+
+
+                let option = '';
+                response.data.forEach(function(item, key) {
+                    option += `<option value="${item.id}">${item.name}</option>`;
                 });
-            }
-            //Add Category function
-            function addOpenModal() {
                 let modalTitle = document.getElementById("modalTitle");
                 let modalBody = document.getElementById("modalBody");
-                modalTitle.innerText = "Add Category For Services";
-                modalBody.innerHTML = `<form method="POST" enctype="multipart/form-data" onsubmit="addCategory(event)">
+                modalTitle.innerText = "Add Subcategory Category For Services";
+                modalBody.innerHTML = `<form method="POST"  onsubmit="addCategory(event)">
                         @csrf
                         <div class="mb-3">
-                            <label for="name" class="form-label">Category Name</label>
+                            <label for="name" class="form-label">SUb Category Name</label>
                             <input type="text" class="form-control" id="name" name="name"
-                                placeholder="Enter Category Name">
+                                placeholder="Enter Sub Category Name">
                             <span class="text-danger" id="nameError"></span>
                         </div>
-
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Select Category</label>
+                            <select  class="form-control" id="category_id" name="category_id"
+                              >
+                                ${option}
+                                </select>
+                            <span class="text-danger" id="category"></span>
+                        </div>
 
                         <div class="mb-3">
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Add Service Category</button>
+                            <button type="submit" class="btn btn-primary">Add Sub Category</button>
                         </div>
                     </form>`
                 $("#exampleVerticallycenteredModal").modal("show");
 
                 return;
+            });
+
+        }
+
+        function addCategory(event) {
+            event.preventDefault();
+            let nameError = document.getElementById('nameError');
+            let name = document.getElementById('name').value;
+            let category_id = document.getElementById('category_id').value;
+
+
+            if (name.length < 3 || name.length > 255) {
+                nameError.innerText = 'Name must be at least 255 characters Or greater then 3 characters';
+                return;
+            } else if (category_id == "") {
+                nameError.innerText = 'Please select a category';
+                return;
             }
 
-            function addCategory(event) {
-                event.preventDefault();
-                let nameError = document.getElementById('nameError');
-                let name = document.getElementById('name').value;
+            axios.post("{{ route('services_sub_categories.store.api') }}", {
+                name: name,
+                category_id: category_id,
+            }).then(function(response) {
+                console.log(response.data);
+                if (response.data.error == false) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: response.data.message,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                    document.getElementById('closeModal').click();
+                    name.value = '';
+                    nameError.innerText = '';
+                    showRecords();
 
-
-                if (name.length < 3 || name.length > 255) {
-                    nameError.innerText = 'Name must be at least 255 characters Or greater then 3 characters';
-                    return;
-                }
-
-                axios.post("{{ route('services_categories.store.api') }}", {
-                    name: name
-                }).then(function(response) {
-                    console.log(response.data);
-                    if (response.data.error == false) {
+                } else {
+                    if (typeof response.data.message === "string") {
                         Swal.fire({
-                            icon: 'success',
+                            icon: 'error',
                             title: response.data.message,
                             showConfirmButton: false,
                             timer: 1500
                         });
-                        document.getElementById('closeModal').click();
-                        name.value = '';
-                        nameError.innerText = '';
-                        showRecords();
-
                     } else {
+                        let msg = '';
+                        for (const field in response.data.message) {
+                            if (response.data.message.hasOwnProperty(field)) {
+                                const value = response.data.message[field];
+                                value.forEach(function(item) {
+                                    msg += item + ' ';
+                                });
+                            }
+                        }
                         Swal.fire({
                             icon: 'error',
-                            title: response.data.message.name,
+                            title: msg,
                             showConfirmButton: false,
                             timer: 1500
                         });
                     }
-                }).catch(function(error) {
-                    console.log(error)
-                });
 
-            }
-            $(function() {
-                $(document).on('click', '.status', function(e) {
-                    e.preventDefault();
-                    var link = $(this).attr("href");
+                }
+            }).catch(function(error) {
+                console.log(error)
+            });
 
-
-                    Swal.fire({
-                        title: 'Are you sure?',
-                        text: "Change status of this Social Media?",
-                        icon: 'warning',
-                        showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, change status!'
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            window.location.href = link
-                            Swal.fire(
-                                'updated',
-                                'Status updated.',
-                                'success'
-                            )
-                        }
-                    })
+        }
+        $(function() {
+            $(document).on('click', '.status', function(e) {
+                e.preventDefault();
+                var link = $(this).attr("href");
 
 
-                });
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: "Change status of this Social Media?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, change status!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = link
+                        Swal.fire(
+                            'updated',
+                            'Status updated.',
+                            'success'
+                        )
+                    }
+                })
+
 
             });
-        </script>
-    @endsection
+
+        });
+    </script>
+@endsection

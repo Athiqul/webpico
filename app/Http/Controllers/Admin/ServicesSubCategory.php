@@ -132,6 +132,7 @@ class ServicesSubCategory extends Controller
            return [
              'id'=>$item->id,
              'name'=>$item->name,
+             'slug'=>$item->slug,
              'category'=>$item->category->name,
            ];
         });
