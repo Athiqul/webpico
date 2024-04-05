@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Contact;
 use App\Http\Controllers\Admin\ServicesCategoryController;
+use App\Http\Controllers\Admin\ServicesSubCategory;
 use App\Http\Controllers\Admin\SocialMedia;
 use App\Http\Controllers\Admin\Testimonal;
 use App\Http\Controllers\ProfileController;
@@ -47,6 +48,9 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
 ///Services category controller
     Route::get('services-category',[ServicesCategoryController::class,'showServiceCategoryPage'])->name('admin.service.category');
+
+//Services Sub Category
+    Route::get('services-sub-category',[ServicesSubCategory::class,'showServiceSubCategoryPage'])->name('admin.service.subcategory');
 
 });
 

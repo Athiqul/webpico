@@ -43,11 +43,16 @@
             <ul>
 
                 <li>
-                    <a href="{{ route('admin.service.category') }}" >
-
-                       Services Category
+                    <a href="{{ route('admin.service.category') }}" ><i class="bx bx-right-arrow-alt"></i>Services Category
                     </a>
 
+                </li>
+
+
+                <li> <a  title="" ><i class="bx bx-right-arrow-alt"></i>Services SubCategory</a>
+                </li>
+
+                <li> <a  title="" ><i class="bx bx-right-arrow-alt"></i>Services List</a>
                 </li>
 
 

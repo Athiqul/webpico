@@ -1,7 +1,7 @@
 @extends('admin.layout.master_layout')
 
 @section('title')
-    Services Category List| WebPico
+    SubCategory List| WebPico
 @endsection
 
 @section('need-css')
@@ -17,13 +17,13 @@
 
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3"> Services Category List </div>
+            <div class="breadcrumb-title pe-3"> Sub Category List </div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Services Category List</li>
+                        <li class="breadcrumb-item active" aria-current="page">Sub Category List</li>
                     </ol>
                 </nav>
             </div>
@@ -32,7 +32,7 @@
         <!--end breadcrumb-->
         <div class="row" data-select2-id="26">
             <div class="col-xl-12 mx-auto" data-select2-id="25">
-                <h6 class="mb-0 text-uppercase">Services Category List</h6>
+                <h6 class="mb-0 text-uppercase">Sub Category List</h6>
                 <hr>
                 <div class="card" data-select2-id="24">
                     <div class="card-body" data-select2-id="23">
@@ -51,7 +51,7 @@
 
                                 <div class="card mt-3">
 
-                                    <h2 class="text-center mt-3"> Services Category List</h2>
+                                    <h2 class="text-center mt-3"> Sub Category List</h2>
                                     <div class="card-body" id="showRecords">
 
                                     </div>
@@ -77,7 +77,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle">Add Category For Services</h5>
+                    <h5 class="modal-title" id="modalTitle">Add Sub Category For Services</h5>
                     <button type="button" id="closeModal" class="btn-close" data-bs-dismiss="modal"
                         aria-label="Close"></button>
                 </div>
@@ -86,6 +86,7 @@
                 </div>
             </div>
         </div>
+    </div>
     @endsection
 
 
