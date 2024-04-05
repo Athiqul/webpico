@@ -57,7 +57,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
     Route::controller(ServicesController::class)->group(function(){
         Route::get('service-add','add')->name('admin.service.add');
         Route::post('service-add','create');
-        Route::get('service-list','index')->name('admin.service.list');
+        Route::get('service-list','index')->name('admin.service.index');
         Route::get('service/{id}','edit')->name('admin.service.edit');
         Route::put('service/{id}','update');
         Route::get('service-status-change/{id}','statusChange')->name('admin.service.status');

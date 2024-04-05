@@ -38,7 +38,7 @@ class ServicesController extends Controller
     public function index()
     {
         // Retrieve all service blog entries
-        $items = Service::get();
+        $items = Service::with(['category','subcategory'])->get();
 
         // Return a view with the retrieved data
         return view('admin.services.index', compact('items'));

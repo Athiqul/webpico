@@ -1,6 +1,6 @@
 @extends('admin.layout.master_layout')
 @section('title')
-    {{ $title }}|Master Sellers
+   Services List|WebPico
 @endsection
 @section('need-css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}">
@@ -12,13 +12,13 @@
 
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3"> {{ $title }} List </div>
+            <div class="breadcrumb-title pe-3">Services List List </div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ $title }} List</li>
+                        <li class="breadcrumb-item active" aria-current="page">Services List</li>
                     </ol>
                 </nav>
             </div>
@@ -32,10 +32,10 @@
                     <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap5">
 
                         <div class="row">
-                            <h6>{{ $title }} List</h6>
+                            <h6>Services List</h6>
                             <div class="col-md-12">
 
-                                @if (count($sellers) > 0)
+                                @if (count($items) > 0)
                                     <table id="example" class="table table-striped table-bordered dataTable"
                                         style="width:100%" role="grid" aria-describedby="example_info">
                                         <thead>
@@ -45,63 +45,63 @@
                                                     style="width: 75.75px;">SL.</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                     colspan="1" aria-label="Action" aria-sort="ascending"
-                                                    style="width: 75.75px;">Name</th>
+                                                    style="width: 75.75px;">Category</th>
                                                 <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"
-                                                    style="width: 144.312px;">Mobile</th>
+                                                    style="width: 144.312px;">Sub Category</th>
                                                 <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"
-                                                    style="width: 144.312px;">Email</th>
+                                                    style="width: 144.312px;">Desc</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                     colspan="1" aria-label="Position: activate to sort column ascending"
-                                                    style="width: 239.812px;">Package</th>
+                                                    style="width: 239.812px;">Status</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                     colspan="1" aria-label="Position: activate to sort column ascending"
-                                                    style="width: 239.812px;">Balance</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                    colspan="1" aria-label="Office: activate to sort column ascending"
-                                                    style="width: 102.141px;">Purchase</th>
-
-                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                    colspan="1" aria-label="Office: activate to sort column ascending"
-                                                    style="width: 102.141px;">Expense</th>
-                                                <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
-                                                    colspan="1" aria-label="Office: activate to sort column ascending"
-                                                    style="width: 102.141px;">Created_at</th>
+                                                    style="width: 239.812px;">Last Update</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                     colspan="1" aria-label="Office: activate to sort column ascending"
                                                     style="width: 102.141px;">Action</th>
-
-
                                             </tr>
                                         </thead>
                                         <tbody>
 
-                                            @foreach ($sellers as $key => $item)
+                                            @foreach ($items as $key => $item)
                                                 <tr role="row" class="odd">
                                                     <td>{{ ++$key }}</td>
-                                                    <td><a href="{{ route('admin.seller.profile',encrypt($item->id)) }}" target="_blank"
-                                                            rel="noopener noreferrer">{{ ucwords($item->name) }}</a> </td>
-                                                    <td class="sorting_1">{{ $item->mobile }}</td>
-                                                    <td>{{ $item->email }}</td>
+                                                    <td>{{ $item->category->name }} </td>
+                                                    <td class="sorting_1">{{ $item->subcategory->name }}</td>
+                                                    <td>
+                                                        @php
+                                                            $words=explode(' ',strip_tags($item->desc));
+                                                            $shortDest=implode(' ',array_slice($words,0,4));
 
-                                                    <td> <a href="{{ route('admin.edit.package',encrypt($item->sellerPackage?->device_package_id)) }}" target="_blank" rel="noopener noreferrer">{{ $item->package }}</a></td>
+                                                            $shortDest.=count($words)>4?'...':'';
+                                                        @endphp
+                                                        {{ $shortDest }}
+                                                    </td>
 
-                                                    <td>{{ $item->balance->current_balance }}</td>
-                                                    <td>{{ $item->balance->total_balance }}</td>
-                                                    <td>{{ $item->balance->expense_balance }}</td>
-                                                    <td>{{ Carbon\Carbon::parse($item->created_at)->diffForHumans() }}</td>
+                                                    <td> <span class="badge rounded bg-{{ $item->status=='1'?'success':'danger' }}">{{ $item->status=='1'?'Active':'Inactive' }}</span> </td>
+
+                                                    <td>{{$item->updated_at->diffForHumans() }}</td>
 
 
-                                                    <td> <a href="{{ route('admin.seller.profile',encrypt($item->id)) }}" class="btn btn-info" title="View">
-                                                            <i class="bx bxs-paper-plane">
-                                                            </i>
+
+                                                    <td> <a href="{{ route('admin.service.edit',$item->id) }}" class="btn btn-info" title="View">
+                                                        <i class="fadeIn animated bx bx-pencil"></i>
                                                         </a>
 
-                                                        <a onclick="alertItem(event)" href="{{ route('admin.status.seller',encrypt($item->id)) }}"
+                                                        <a onclick="alertItem(event)" href="{{ route('admin.service.status',$item->id) }}"
                                                             class="btn {{ $item->status==1?'btn-danger':'btn-success' }} " title="{{ $item->status==1?'Make Deactive':'Make Active' }}">
-                                                            <i class="bx {{ $item->status==1?'bxs-user-minus':'bxs-user-plus' }}  ">
+                                                            <i class="bx {{ $item->status==1?'bx-dislike':'bx-like' }}  ">
                                                             </i>
                                                         </a>
 
+                                                        <a onclick="alertItem(event)" href="javascript;"
+                                                            class="btn {{ $item->status==1?'btn-danger':'btn-success' }} " title="{{ $item->status==1?'Make Deactive':'Make Active' }}">
+                                                            <i class="lni lni-eye"></i>
+                                                        </a>
+                                                        <a onclick="alertItem(event)" href="{{ route('admin.service.delete',$item->id) }}"
+                                                            class="btn {{ $item->status==1?'btn-danger':'btn-success' }} " title="{{ $item->status==1?'Make Deactive':'Make Active' }}">
+                                                            <i class="lni lni-trash"></i>
+                                                        </a>
                                                     </td>
 
 
@@ -112,7 +112,7 @@
 
                                     </table>
                                 @else
-                                    <h4 class="text-center ">There is no {{ $title }} List</h4>
+                                    <h4 class="text-center ">There is no Services List</h4>
                                 @endif
 
                             </div>
