@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\Contact;
 use App\Http\Controllers\Admin\ServicesCategoryController;
+use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\ServicesSubCategory;
 use App\Http\Controllers\Admin\SocialMedia;
 use App\Http\Controllers\Admin\Testimonal;
@@ -51,6 +52,17 @@ Route::middleware('auth')->prefix('admin')->group(function () {
 
 //Services Sub Category
     Route::get('services-sub-category',[ServicesSubCategory::class,'showServiceSubCategoryPage'])->name('admin.service.subcategory');
+
+    //Service
+    Route::controller(ServicesController::class)->group(function(){
+        Route::get('service-add','add')->name('admin.service.add');
+        Route::post('service-add','create');
+        Route::get('service-list','index')->name('admin.service.list');
+        Route::get('service/{id}','edit')->name('admin.service.edit');
+        Route::put('service/{id}','update');
+        Route::get('service-status-change/{id}','statusChange')->name('admin.service.status');
+        route::get('service-delete/{id}','destory')->name('admin.service.delete');
+    });
 
 });
 

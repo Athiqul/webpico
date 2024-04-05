@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('sub_category_id')->nullable();
             $table->string('image')->nullable();
             $table->text('desc');
+            $table->enum('status',['1','0'])->default('1');
             $table->timestamps();
             $table->foreign('category_id')->references('id')->on('services_categories');
             $table->foreign('sub_category_id')->references('id')->on('sub_categories');
