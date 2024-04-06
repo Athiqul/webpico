@@ -91,41 +91,33 @@
         <li class="nav-link-mobile">
             <button onclick="handleService()" type="button" class="after:content-arrow-min">Services</button>
             <ul id="mobileService" class="hidden">
+                @foreach ($categories as $category)
                 <li class="nav-link-mobile">
-                    <button onclick="handleMobileSeo()" class=" after:content-arrow-min">
-                        SEO
+
+                    @if (count($category->subcategories) > 0)
+                    <button onclick="toggleHandle({{  $category->id}})" class=" after:content-arrow-min">
+                        {{ ucwords($category->name) }}
                     </button>
-                    <ul id="mobileSeo" class="hidden">
+                    <ul id="menu-{{ $category->id }}" class="hidden">
+                        @foreach ($category->subcategories as $item)
                         <li class="nav-link-mobile">
-                            <a href="" class="">Local SEO</a>
+                            <a href="" class="">{{ ucwords($item->name) }}</a>
                         </li>
-                        <li class="nav-link-mobile">
-                            <a href="" class="">E-Commerce</a>
-                        </li>
-                        <li class="nav-link-mobile">
-                            <a href="" class="">Multi Location</a>
-                        </li>
+                        @endforeach
+
+
                     </ul>
+                    @else
+                    <li class="nav-link-mobile">
+                        <a href="">{{ $category->name }}</a>
+                    </li>
+                    @endif
+
                 </li>
-                <li class="nav-link-mobile">
-                    <button onclick="handleMobileMarketing()" class=" whitespace-nowrap after:content-arrow-min ">
-                        Digital Marketing
-                    </button>
-                    <ul id="mobileMarketing" class="hidden">
-                        <li class="nav-link-mobile">
-                            <a href="" class="">SMM</a>
-                        </li>
-                        <li class="nav-link-mobile">
-                            <a href="" class="">Google Ads</a>
-                        </li>
-                        <li class="nav-link-mobile">
-                            <a href="" class="">Content Marketing</a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-link-mobile">
-                    <a href="">Video Editing</a>
-                </li>
+                @endforeach
+
+
+
             </ul>
         </li>
         <li class="nav-link-mobile">
