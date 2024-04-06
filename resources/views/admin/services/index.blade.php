@@ -100,10 +100,10 @@
                                                         </a>
 
                                                         <a onclick="alertItem(event)" href="javascript;"
-                                                            class="btn {{ $item->status==1?'btn-info':'btn-secondary' }} " title="{{ $item->status==1?'Web In web':'Not Available in web' }}">
+                                                          target="_blank"  class="btn {{ $item->status==1?'btn-info':'btn-secondary' }} " title="{{ $item->status==1?'Web In web':'Not Available in web' }}">
                                                             <i class="lni lni-eye"></i>
                                                         </a>
-                                                        <a onclick="alertItem(event)" href="{{ route('admin.service.delete',$item->id) }}"
+                                                        <a onclick="alertItem(event)" title="Delete this service item" href="{{ route('admin.service.delete',$item->id) }}"
                                                             class="btn bg-danger">
                                                             <i class="lni lni-trash"></i>
                                                         </a>
@@ -141,12 +141,12 @@
 
 
             record.preventDefault();
-            let status = record.target.closest('a').dataset.status;
+            let status = record.target.closest('a').getAttribute('title');
             var link = record.target.closest('a').getAttribute('href');
 
             Swal.fire({
                 title: 'Are you sure?',
-                text: "Do you want to change status of this account?",
+                text: `Do you want to ${status}?`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',

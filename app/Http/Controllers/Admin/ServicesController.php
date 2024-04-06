@@ -107,7 +107,7 @@ class ServicesController extends Controller
         $serviceBlog = Service::findOrFail($id);
 
         // Update the service blog entry status
-        $serviceBlog->status = $serviceBlog->status == 1? 0 : 1;
+        $serviceBlog->status = $serviceBlog->status == '1'? '0' : '1';
 
         // Save the updated service blog entry
         $serviceBlog->save();

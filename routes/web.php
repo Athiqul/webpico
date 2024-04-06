@@ -61,7 +61,7 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::get('service/{id}','edit')->name('admin.service.edit');
         Route::put('service/{id}','update');
         Route::get('service-status-change/{id}','statusChange')->name('admin.service.status');
-        route::get('service-delete/{id}','destory')->name('admin.service.delete');
+        route::get('service-delete/{id}','destroy')->name('admin.service.delete');
     });
 
 });
