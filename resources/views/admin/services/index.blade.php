@@ -33,6 +33,9 @@
 
                         <div class="row">
                             <h6>Services List</h6>
+                            <div class="col-12">
+                                <a href="{{ route('admin.service.add') }}" class="btn btn-primary">Add Service</a>
+                            </div>
                             <div class="col-md-12">
 
                                 @if (count($items) > 0)
@@ -67,7 +70,7 @@
                                                 <tr role="row" class="odd">
                                                     <td>{{ ++$key }}</td>
                                                     <td>{{ $item->category->name }} </td>
-                                                    <td class="sorting_1">{{ $item->subcategory->name }}</td>
+                                                    <td class="sorting_1">{{ $item->subcategory?->name??'' }}</td>
                                                     <td>
                                                         @php
                                                             $words=explode(' ',strip_tags($item->desc));
@@ -84,22 +87,24 @@
 
 
 
-                                                    <td> <a href="{{ route('admin.service.edit',$item->id) }}" class="btn btn-info" title="View">
+                                                    <td>
+
+                                                        <a href="{{ route('admin.service.edit',encrypt($item->id)) }}" class="btn btn-secondary" title="Edit">
                                                         <i class="fadeIn animated bx bx-pencil"></i>
                                                         </a>
 
                                                         <a onclick="alertItem(event)" href="{{ route('admin.service.status',$item->id) }}"
-                                                            class="btn {{ $item->status==1?'btn-danger':'btn-success' }} " title="{{ $item->status==1?'Make Deactive':'Make Active' }}">
+                                                            class="btn {{ $item->status==1?'btn-warning':'btn-primary' }} " title="{{ $item->status==1?'Make Deactive':'Make Active' }}">
                                                             <i class="bx {{ $item->status==1?'bx-dislike':'bx-like' }}  ">
                                                             </i>
                                                         </a>
 
                                                         <a onclick="alertItem(event)" href="javascript;"
-                                                            class="btn {{ $item->status==1?'btn-danger':'btn-success' }} " title="{{ $item->status==1?'Make Deactive':'Make Active' }}">
+                                                            class="btn {{ $item->status==1?'btn-info':'btn-secondary' }} " title="{{ $item->status==1?'Web In web':'Not Available in web' }}">
                                                             <i class="lni lni-eye"></i>
                                                         </a>
                                                         <a onclick="alertItem(event)" href="{{ route('admin.service.delete',$item->id) }}"
-                                                            class="btn {{ $item->status==1?'btn-danger':'btn-success' }} " title="{{ $item->status==1?'Make Deactive':'Make Active' }}">
+                                                            class="btn bg-danger">
                                                             <i class="lni lni-trash"></i>
                                                         </a>
                                                     </td>
