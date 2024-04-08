@@ -6,7 +6,7 @@
         <div class="hidden md:block">
             <ul class="block md:flex gap-3">
                 <li class="nav-link active">
-                    <a href="#" class="">Home</a>
+                    <a href="{{ route('web.home') }}" class="">Home</a>
                 </li>
                 <div class="group relative">
                     <li class="nav-link after:content-arrow-min">

@@ -189,22 +189,22 @@ Webpico | Data Driven SEO & Digital marketing agency.
     </div>
     <div class=" grid grid-cols-1 md:grid-cols-2 gap-8 px-5 md:px-0">
         <a href="#" class="bg-primary px-8 pt-10 pb-5 hover:bg-secondary duration-200 transition-all group ">
-            <img src="./assets/feature-img.jpeg" alt="Feature image" class="">
+            <img src="{{ asset('src/assets/feature-img.jpeg') }}" alt="Feature image" class="">
             <h3 class="text-white font-montserrat font-bold text-2xl mt-2">SOCIAL MEDIA MARKETING</h3>
             <p class="text-secondary font-montserrat text-xl font-medium group-hover:text-primary">Above IT</p>
         </a>
         <a href="#" class="bg-primary px-8 pt-10 pb-5 hover:bg-secondary duration-200 transition-all group ">
-            <img src="./assets/feature-img.jpeg" alt="Feature image" class="">
+            <img src="{{ asset('src/assets/feature-img.jpeg') }}" alt="Feature image" class="">
             <h3 class="text-white font-montserrat font-bold text-2xl mt-2">SOCIAL MEDIA MARKETING</h3>
             <p class="text-secondary font-montserrat text-xl font-medium group-hover:text-primary">Above IT</p>
         </a>
         <a href="#" class="bg-primary px-8 pt-10 pb-5 hover:bg-secondary duration-200 transition-all group ">
-            <img src="./assets/feature-img.jpeg" alt="Feature image" class="">
+            <img src="{{ asset('src/assets/feature-img.jpeg') }}" alt="Feature image" class="">
             <h3 class="text-white font-montserrat font-bold text-2xl mt-2">SOCIAL MEDIA MARKETING</h3>
             <p class="text-secondary font-montserrat text-xl font-medium group-hover:text-primary">Above IT</p>
         </a>
         <a href="#" class="bg-primary px-8 pt-10 pb-5 hover:bg-secondary duration-200 transition-all group ">
-            <img src="./assets/feature-img.jpeg" alt="Feature image" class="">
+            <img src="{{ asset('src/assets/feature-img.jpeg') }}" alt="Feature image" class="">
             <h3 class="text-white font-montserrat font-bold text-2xl mt-2">SOCIAL MEDIA MARKETING</h3>
             <p class="text-secondary font-montserrat text-xl font-medium group-hover:text-primary">Above IT</p>
         </a>
