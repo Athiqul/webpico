@@ -10,7 +10,7 @@
                 </li>
                 <div class="group relative">
                     <li class="nav-link after:content-arrow-min">
-                        <a href="" class="">Services</a>
+                        <a href="{{ route('web.services') }}" class="">Services</a>
                     </li>
                     <div class="hidden group-hover:block absolute">
                         @php
