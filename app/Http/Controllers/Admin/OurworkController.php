@@ -52,7 +52,8 @@ class OurworkController extends Controller
             // Redirect to a route after successful creation
             return redirect()->route('admin.ourwork.index')->with(['toast-type' => 'success', 'toast-message' => 'Successfully Ourwork created! which are now available for web']);
         } catch (\Exception $e) {
-            return redirect()->back()->with(['toast-type' => 'error', 'toast-message' => 'Somthing went wrong!']);
+            dd($e->getMessage());
+            return redirect()->back()->with(['toast-type' => 'error', 'toast-message' => 'Somthing went wrong!'])->withInput();
         }
     }
 
@@ -128,7 +129,6 @@ class OurworkController extends Controller
             // Update the OurWork blog entry fields
             $ourWork->title = $validatedData['title'];
             $ourWork->by = $validatedData['by']??null;
-            $ourWork->desc = $validatedData['desc'];
             $ourWork->image=$image_name??$ourWork->image;
 
             if($ourWork->isClean())
@@ -141,6 +141,7 @@ class OurworkController extends Controller
             // Redirect to a route after successful update
             return redirect()->back()->with(['toast-type'=>'success','toast-message'=>'OurWork Has been updated successfully!']);
         }catch(\Exception $e){
+            dd($e->getMessage());
             return redirect()->back()->with(['toast-type'=>'error','toast-message'=>'Something went wrong!']);
         }
         // Validate the incoming request data
@@ -154,7 +155,7 @@ class OurworkController extends Controller
         $OurWorkBlog->delete();
 
         // Redirect to a route after successful deletion
-        return redirect()->route('admin.OurWork.index')->with('success', 'OurWork blog entry deleted successfully');
+        return redirect()->route('admin.ourwork.index')->with('success', 'OurWork blog entry deleted successfully');
     }
 
     public function statusChange($id)
@@ -172,9 +173,5 @@ class OurworkController extends Controller
         return redirect()->back()->with(['toast-type'=>'success','toast-message'=>'OurWork Has been updated successfully!']);
     }
 
-    public function categoryWiseSub($id)
-    {
-        $subItems=SubCategory::where('title',$id)->get();
-        return response()->json($subItems);
-    }
+
 }

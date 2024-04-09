@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Contact;
+use App\Http\Controllers\Admin\OurworkController;
 use App\Http\Controllers\Admin\ServicesCategoryController;
 use App\Http\Controllers\Admin\ServicesController;
 use App\Http\Controllers\Admin\ServicesSubCategory;
@@ -65,6 +66,16 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::put('service/{id}','update');
         Route::get('service-status-change/{id}','statusChange')->name('admin.service.status');
         route::get('service-delete/{id}','destroy')->name('admin.service.delete');
+    });
+
+    Route::controller(OurworkController::class)->group(function(){
+        Route::get('ourwork-add','add')->name('admin.ourwork.add');
+        Route::post('ourwork-add','create');
+        Route::get('ourwork-list','index')->name('admin.ourwork.index');
+        Route::get('ourwork/{id}','edit')->name('admin.ourwork.edit');
+        Route::put('ourwork/{id}','update');
+        Route::get('ourwork-status-change/{id}','statusChange')->name('admin.ourwork.status');
+        route::get('ourwork-delete/{id}','destroy')->name('admin.ourwork.delete');
     });
 
 });

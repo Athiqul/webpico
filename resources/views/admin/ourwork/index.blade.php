@@ -1,6 +1,6 @@
 @extends('admin.layout.master_layout')
 @section('title')
-   Services List|WebPico
+   Ourwork List|WebPico
 @endsection
 @section('need-css')
     <link rel="stylesheet" href="{{ asset('assets/plugins/notifications/css/lobibox.min.css') }}">
@@ -12,13 +12,13 @@
 
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Services List List </div>
+            <div class="breadcrumb-title pe-3">Ourwork List </div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
                         <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Services List</li>
+                        <li class="breadcrumb-item active" aria-current="page">Ourwork List</li>
                     </ol>
                 </nav>
             </div>
@@ -32,9 +32,9 @@
                     <div id="example_wrapper" class="dataTables_wrapper dt-bootstrap5">
 
                         <div class="row">
-                            <h6>Services List</h6>
+                            <h6>Ourwork List</h6>
                             <div class="col-12">
-                                <a href="{{ route('admin.service.add') }}" class="btn btn-primary">Add Service</a>
+                                <a href="{{ route('admin.ourwork.add') }}" class="btn btn-primary">Add Ourwork</a>
                             </div>
                             <div class="col-md-12">
 
@@ -48,11 +48,11 @@
                                                     style="width: 75.75px;">SL.</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                     colspan="1" aria-label="Action" aria-sort="ascending"
-                                                    style="width: 75.75px;">Category</th>
+                                                    style="width: 75.75px;">Title</th>
                                                 <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"
-                                                    style="width: 144.312px;">Sub Category</th>
+                                                    style="width: 144.312px;">Work By</th>
                                                 <th tabindex="0" aria-controls="example" rowspan="1" colspan="1"
-                                                    style="width: 144.312px;">Desc</th>
+                                                    style="width: 144.312px;">Image</th>
                                                 <th class="sorting" tabindex="0" aria-controls="example" rowspan="1"
                                                     colspan="1" aria-label="Position: activate to sort column ascending"
                                                     style="width: 239.812px;">Status</th>
@@ -69,16 +69,10 @@
                                             @foreach ($items as $key => $item)
                                                 <tr role="row" class="odd">
                                                     <td>{{ ++$key }}</td>
-                                                    <td>{{ $item->category->name }} </td>
-                                                    <td class="sorting_1">{{ $item->subcategory?->name??'' }}</td>
+                                                    <td>{{ ucwords($item->title) }} </td>
+                                                    <td class="sorting_1">{{ $item->by }}</td>
                                                     <td>
-                                                        @php
-                                                            $words=explode(' ',strip_tags($item->desc));
-                                                            $shortDest=implode(' ',array_slice($words,0,4));
-
-                                                            $shortDest.=count($words)>4?'...':'';
-                                                        @endphp
-                                                        {{ $shortDest }}
+                                                       <img src="{{ route('public.image',['ourwork',$item->image]) }}" height="50px" width="50px" alt="">
                                                     </td>
 
                                                     <td> <span class="badge rounded bg-{{ $item->status=='1'?'success':'danger' }}">{{ $item->status=='1'?'Active':'Inactive' }}</span> </td>
@@ -89,21 +83,21 @@
 
                                                     <td>
 
-                                                        <a href="{{ route('admin.service.edit',encrypt($item->id)) }}" class="btn btn-secondary" title="Edit">
+                                                        <a href="{{ route('admin.ourwork.edit',encrypt($item->id)) }}" class="btn btn-secondary" title="Edit">
                                                         <i class="fadeIn animated bx bx-pencil"></i>
                                                         </a>
 
-                                                        <a onclick="alertItem(event)" href="{{ route('admin.service.status',$item->id) }}"
+                                                        <a onclick="alertItem(event)" href="{{ route('admin.ourwork.status',$item->id) }}"
                                                             class="btn {{ $item->status==1?'btn-warning':'btn-primary' }} " title="{{ $item->status==1?'Make Deactive':'Make Active' }}">
                                                             <i class="bx {{ $item->status==1?'bx-dislike':'bx-like' }}  ">
                                                             </i>
                                                         </a>
 
-                                                        <a onclick="alertItem(event)" href="javascript;"
+                                                        <a  href="javascript;"
                                                           target="_blank"  class="btn {{ $item->status==1?'btn-info':'btn-secondary' }} " title="{{ $item->status==1?'Web In web':'Not Available in web' }}">
                                                             <i class="lni lni-eye"></i>
                                                         </a>
-                                                        <a onclick="alertItem(event)" title="Delete this service item" href="{{ route('admin.service.delete',$item->id) }}"
+                                                        <a onclick="alertItem(event)" title="Delete this service item" href="{{ route('admin.ourwork.delete',$item->id) }}"
                                                             class="btn bg-danger">
                                                             <i class="lni lni-trash"></i>
                                                         </a>
@@ -117,7 +111,7 @@
 
                                     </table>
                                 @else
-                                    <h4 class="text-center ">There is no Services List</h4>
+                                    <h4 class="text-center ">There is no Ourwork List</h4>
                                 @endif
 
                             </div>

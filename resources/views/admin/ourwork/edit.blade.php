@@ -1,7 +1,7 @@
 @extends('admin.layout.master_layout')
 
 @section('title')
-    Edit Service| MasterSeller
+    Edit Ourwork| MasterSeller
 @endsection
 
 @section('need-css')
@@ -18,14 +18,14 @@
     <div class="page-content" data-select2-id="27">
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Edit Service</div>
+            <div class="breadcrumb-title pe-3">Edit Ourwork</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.service.index') }}"><i
+                        <li class="breadcrumb-item"><a href="{{ route('admin.ourwork.index') }}"><i
                                     class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Edit Service</li>
+                        <li class="breadcrumb-item active" aria-current="page">Edit Ourwork</li>
                     </ol>
                 </nav>
             </div>
@@ -34,76 +34,70 @@
         <!--end breadcrumb-->
         <div class="row" data-select2-id="26">
             <div class="col-xl-9 mx-auto" data-select2-id="25">
-                <h6 class="mb-0 text-uppercase">Edit Service</h6>
+                <h6 class="mb-0 text-uppercase">Edit Ourwork</h6>
                 <hr>
                 <div class="card" data-select2-id="24">
                     <div class="card-body" data-select2-id="23">
-                        <form method="POST" action="{{ route('admin.service.edit',$item->id) }}" id="transfer">
+                        <form method="POST" action="{{ route('admin.ourwork.edit',$item->id) }}" id="transfer" enctype="multipart/form-data">
                             @csrf
-                             @method('PUT')
+                            @method('PUT')
+
                             <div class="border p-3 rounded" data-select2-id="22">
 
 
                                 <div class="col-12 mb-2">
-                                    <label for="amount" class="form-label">Select Category</label>
+                                    <label for="amount" class="form-label">Type Title</label>
                                     <div class=" form-group ">
-                                        <select name="category_id" id="categoryId"
-                                            class="form-control text-black  @error('sub_category_id')
-                                {{ 'is-invalid' }}
-                               @enderror"
-                                            required>
-                                            <option value="">Select Category</option>
-                                            @foreach ($categories as $category)
-                                                <option
-                                                    value="{{ $category->id }} " {{ old('category_id',$item->category->id) == $category->id ? 'Selected' : '' }}>
-                                                    {{ $category->name }}</option>
-                                            @endforeach
-                                        </select>
-
+                                      <input type="text" class="form-control border-start-0" name="title" placeholder="Type title of ourwork" title="Type title" value="{{ old('title',$item->title) }}" required>
 
                                     </div>
 
-                                    @error('category_id')
+                                    @error('title')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
 
                                 </div>
 
                                 <div class="col-12 mb-2">
-                                    <label for="amount" class="form-label">Select Sub Category</label>
-                                    <div class="input-group form-group ">
-                                        <select name="sub_category_id" id="subCategory"
-                                            class="form-control border-start-0  @error('sub_category_id')
-                                {{ 'is-invalid' }}
-                               @enderror"
-                                            id="sub_category" {{ $item->subcategory==null?'disabled':'' }} >
-                                            <option value="{{ $item->subcategory?->id??'' }}">{{ $item->subcategory?->name??'' }}</option>
-
-                                        </select>
+                                    <label for="amount" class="form-label">Type By </label>
+                                    <div class=" form-group ">
+                                      <input type="text" class="form-control border-start-0" name="by" placeholder="Type Work By of ourwork" title="Type Work By" value="{{ old('by',$item->by) }}" required>
 
                                     </div>
 
-                                    @error('sub_category_id')
+                                    @error('by')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
 
                                 </div>
 
                                 <div class="col-12 mb-2">
-                                    <label for="amount" class="form-label">Description</label>
-                                    <div class="input-group form-group">
-                                        <textarea name="desc" id="" rows="10" required>{!! old('desc',$item->desc) !!} </textarea>
+                                    <label for="amount" class="form-label">Upload Image </label>
+                                    <div class=" form-group ">
+                                      <input type="file" class="form-control border-start-0" name="image" accept="image/jpeg,image/png" onchange="changeImage(event)"  title="upload image" value="{{ old('image') }}" >
 
                                     </div>
-                                    @error('desc')
+
+                                    @error('image')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
 
                                 </div>
+
+                                <div class="col-6 mb-2">
+                                    <img src="{{ route('public.image',['ourwork',$item->image]) }}" id="preview" width="300px" height="250px" alt="">
+
+                                </div>
+
+
+
+
+
+
 
                                 <div class="col-12 mt-3">
                                     <button type="submit" class="btn btn-info text-light px-5"> <i
-                                            class="bx bxs-send"></i>Edit Service</button>
+                                            class="bx bxs-send"></i>Update Ourwork</button>
                                 </div>
                             </div>
 
@@ -125,43 +119,15 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
-        let category = document.getElementById('categoryId');
-        let subCategory = document.getElementById('subCategory');
-        category.addEventListener('change', (e) => {
 
-            let id = e.target.value.split(' ')[0];
-            if(id=='')
-            {
-                subCategory.innerHTML = '';
-                subCategory.disabled = true;
-                return;
-
-            }
-
-
-            subCategory.disabled = false;
-            subCategory.innerHTML = '';
-            let url = "{{ route('category_wise_sub_categories.api',':id') }}";
-            url = url.replace(':id', id);
-            axios.get(url).then((response) => {
-                if(response.data.length<1)
-                {
-                    subCategory.innerHTML = `<option value="">No Sub Category Found</option>`;
-                    subCategory.disabled = true;
-                    sub.required=false;
-                    return;
-                }
-                response.data.forEach(element => {
-                    let option = document.createElement('option');
-                    option.value = element.id;
-                    option.innerHTML = element.name;
-                    subCategory.appendChild(option);
-                    subCategory.required=true;
-                    return;
-                });
-            });
-        });
-
+      function changeImage(event)
+{
+  if(event.target.files.length>0){
+    var src=URL.createObjectURL( event.target.files[0]);
+    let preview=document.getElementById('preview');
+    preview.src=src;
+  }
+}
         tinymce.init({
             selector: 'textarea',
             plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount linkchecker',
@@ -172,18 +138,19 @@
 
         $('#transfer').validate({
             rules: {
-                category_id: {
+               title: {
                     required: true,
 
 
                 },
 
-                desc: {
+                by: {
                     required: true,
-                    minlength: 10,
+
 
 
                 },
+
 
 
 
@@ -192,11 +159,11 @@
 
             errorElement: 'span',
             errorPlacement: function(error, element) {
-                error.addClass('invalid-feedback');
+                error.EditClass('invalid-feedback');
                 element.closest('.form-group').append(error);
             },
             highlight: function(element, errorClass, validClass) {
-                $(element).addClass('is-invalid');
+                $(element).EditClass('is-invalid');
             },
             unhighlight: function(element, errorClass, validClass) {
                 $(element).removeClass('is-invalid');
