@@ -56,160 +56,88 @@ Webpico | Data Driven SEO & Digital marketing agency.
 <!-- Clients End -->
 
 <!-- About Us -->
+@php
+    $about=App\Models\About::latest()->first();
+
+@endphp
+@if ($about)
 <section
     class="container mx-auto flex md:justify-between justify-center items-center py-10 flex-wrap gap-10 px-5 md:px-0"
     id="">
     <div class="max-w-[31.25rem]">
         <h2 class="font-bold text-2xl text-primary font-montserrat my-5">ABOUT US</h2>
-        <p class="text-black font-montserrat text-xl font-medium    ">At Digital Life, we are more than </br>
-            just a digital marketing agency</p>
-        <p class="font-sans my-5">we are your strategic partner in achieving digital excellence. With a rich
-            tapestry of
-            services, including web development, SEO, IT support, email marketing, and comprehensive digital
-            marketing solutions, we empower businesses to thrive in the digital age.
-        </p>
-        <a class="btn-primary" href="">Services</a>
+        <p class="text-black font-montserrat text-xl font-medium    ">{{ $about->about_title }}</p>
+        {!! $about->about_short_desc !!}
+        <a class="btn-primary" href="{{ route('web.services') }}">Services</a>
     </div>
     <div class="relative">
         <div class="absolute top-0 -bottom-[4px] left-0 -right-[4px] z-[-1] rounded-2xl bg-primary"></div>
         <div class="rounded-2xl overflow-hidden">
             <video width="432px" height="311px" controls
-                src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"></video>
+                src="{{ $about->video_link }}"></video>
         </div>
     </div>
 </section>
+@endif
+
 <!-- About Us End -->
 
 <!-- Services -->
+@php
+    $services = App\Models\Service::with(['category','subcategory'])->where('status','1')->take(6)->get();
+@endphp
+@if (count($services)>0)
 <section class="container mx-auto my-10">
     <div class="pb-14">
         <h3 class="title">OUR SERVICES</h3>
         <p class="description">Service Excellence in Every Detail</p>
     </div>
     <div class="px-5 md:px-0 grid grid-cols-1 md:grid-cols-3 justify-center gap-6">
+        @foreach ($services as $service)
         <div class=" p-5 font-sans bg-primary text-white hover:bg-secondary transition-all duration-200">
-            <p class="text-sm my-2">SEO</p>
-            <h6 class="font-montserrat font-medium text-xl ">Local SEO</h6>
-            <p class="my-2">Our Search Engine Optimization (SEO) service is designed to boost your online visibility
-                and
-                organic search rankings. We employ a comprehensive approach to SEO, focusing on both on-page and
-                off-page optimization techniques.</p>
-            <a href="#" class="mt-4 flex gap-3 items-center hover:flex-row-reverse hover:justify-end transition-all duration-300">
+            <p class="text-sm my-2">{{ strtoupper($service->category->name) }}</p>
+            <h6 class="font-montserrat font-medium text-xl ">{{ $service->subCategory?->name??'' }}</h6>
+            {!! $service->desc !!}
+            <a href="{{ route('web.services') }}" target="_blank" class="mt-4 flex gap-3 items-center hover:flex-row-reverse hover:justify-end transition-all duration-300">
                 <p class="font-bold text-2xl">READ MORE</p>
-                <img src="./assets/arrow-right.svg" alt="">
+                <img src="{{ asset('src/assets/arrow-right.svg') }}" alt="">
             </a>
         </div>
-        <div class=" p-5 font-sans bg-primary text-white hover:bg-secondary transition-all duration-200">
-            <p class="text-sm my-2">SEO</p>
-            <h6 class="font-montserrat font-medium text-xl ">E-Commerce</h6>
-            <p class="my-2">Our Search Engine Optimization (SEO) service is designed to boost your online visibility
-                and
-                organic search rankings. We employ a comprehensive approach to SEO, focusing on both on-page and
-                off-page optimization techniques.</p>
-            <a href="#" class="mt-4 flex gap-3 items-center hover:flex-row-reverse hover:justify-end transition-all duration-300 ">
-                <p class="font-bold text-2xl">READ MORE</p>
-                <img src="./assets/arrow-right.svg" alt="">
-            </a>
-        </div>
-        <div class=" p-5 font-sans bg-primary text-white hover:bg-secondary transition-all duration-200">
-            <p class="text-sm my-2">SEO</p>
-            <h6 class="font-montserrat font-medium text-xl ">Multi-Location</h6>
-            <p class="my-2">Our Search Engine Optimization (SEO) service is designed to boost your online visibility
-                and
-                organic search rankings. We employ a comprehensive approach to SEO, focusing on both on-page and
-                off-page optimization techniques.</p>
-            <a href="#" class="mt-4 flex gap-3 items-center hover:flex-row-reverse hover:justify-end transition-all duration-300 ">
-                <p class="font-bold text-2xl">READ MORE</p>
-                <img src="./assets/arrow-right.svg" alt="">
-            </a>
-        </div>
-        <div class=" p-5 font-sans bg-primary text-white hover:bg-secondary transition-all duration-200">
-            <p class="text-sm my-2">Digital Marketing</p>
-            <h6 class="font-montserrat font-medium text-xl ">SMM</h6>
-            <p class="my-2">Our Search Engine Optimization (SEO) service is designed to boost your online visibility
-                and
-                organic search rankings. We employ a comprehensive approach to SEO, focusing on both on-page and
-                off-page optimization techniques.</p>
-            <a href="#" class="mt-4 flex gap-3 items-center hover:flex-row-reverse hover:justify-end transition-all duration-300 ">
-                <p class="font-bold text-2xl">READ MORE</p>
-                <img src="./assets/arrow-right.svg" alt="">
-            </a>
-        </div>
-        <div class=" p-5 font-sans bg-primary text-white hover:bg-secondary transition-all duration-200">
-            <p class="text-sm my-2">Digital Marketing</p>
-            <h6 class="font-montserrat font-medium text-xl ">Google Ads</h6>
-            <p class="my-2">Our Search Engine Optimization (SEO) service is designed to boost your online visibility
-                and
-                organic search rankings. We employ a comprehensive approach to SEO, focusing on both on-page and
-                off-page optimization techniques.</p>
-            <a href="#" class="mt-4 flex gap-3 items-center hover:flex-row-reverse hover:justify-end transition-all duration-300 ">
-                <p class="font-bold text-2xl">READ MORE</p>
-                <img src="./assets/arrow-right.svg" alt="">
-            </a>
-        </div>
-        <div class=" p-5 font-sans bg-primary text-white hover:bg-secondary transition-all duration-200">
-            <p class="text-sm my-2">Digital Marketing</p>
-            <h6 class="font-montserrat font-medium text-xl ">Content Marketing</h6>
-            <p class="my-2">Our Search Engine Optimization (SEO) service is designed to boost your online visibility
-                and
-                organic search rankings. We employ a comprehensive approach to SEO, focusing on both on-page and
-                off-page optimization techniques.</p>
-            <a href="#" class="mt-4 flex gap-3 items-center hover:flex-row-reverse hover:justify-end transition-all duration-300 ">
-                <p class="font-bold text-2xl">READ MORE</p>
-                <img src="./assets/arrow-right.svg" alt="">
-            </a>
-        </div>
-        <div
-            class="col-span-1 md:col-span-3 bg-primary grid grid-cols-1 md:grid-cols-3 group hover:bg-secondary transition-all duration-200">
-            <div class=""></div>
-            <div class="  p-5 font-sans bg-primary text-white group-hover:bg-secondary transition-all duration-200">
-                <p class="text-sm my-2">Video</p>
-                <h6 class="font-montserrat font-medium text-xl ">Video Editing</h6>
-                <p class="my-2">Our Search Engine Optimization (SEO) service is designed to boost your online
-                    visibility and
-                    organic search rankings. We employ a comprehensive approach to SEO, focusing on both on-page and
-                    off-page optimization techniques.</p>
-                <a href="#" class="mt-4 flex gap-3 items-center hover:flex-row-reverse hover:justify-end transition-all duration-300 ">
-                    <p class="font-bold text-2xl">READ MORE</p>
-                    <img src="./assets/arrow-right.svg" alt="">
-                </a>
-            </div>
-            <div class=""></div>
-        </div>
+        @endforeach
+
+
     </div>
 
 </section>
 <!-- Services End -->
+@endif
 
-<!-- Featured -->
+
+@php
+    $outworks=App\Models\OurWork::where('status','1')->latest()->take(6)->get();
+@endphp
+
+@if (count($outworks)>0)
 <section id="" class="container mx-auto py-10">
     <div class="pb-14">
         <h3 class="title">FEATURED WORK</h3>
         <p class="description">Crafting Success Through Expertise</p>
     </div>
     <div class=" grid grid-cols-1 md:grid-cols-2 gap-8 px-5 md:px-0">
+        @foreach ($outworks as $item)
         <a href="#" class="bg-primary px-8 pt-10 pb-5 hover:bg-secondary duration-200 transition-all group ">
-            <img src="{{ asset('src/assets/feature-img.jpeg') }}" alt="Feature image" class="">
-            <h3 class="text-white font-montserrat font-bold text-2xl mt-2">SOCIAL MEDIA MARKETING</h3>
-            <p class="text-secondary font-montserrat text-xl font-medium group-hover:text-primary">Above IT</p>
+            <img src="{{ route('public.image',['ourwork',$item->image]) }}" style="max-height: 400px; width:100%" alt="Feature image" class="">
+            <h3 class="text-white font-montserrat font-bold text-2xl mt-2">{{ ucwords($item->title) }}</h3>
+            <p class="text-secondary font-montserrat text-xl font-medium group-hover:text-primary">{{ ucwords($item->by) }}</p>
         </a>
-        <a href="#" class="bg-primary px-8 pt-10 pb-5 hover:bg-secondary duration-200 transition-all group ">
-            <img src="{{ asset('src/assets/feature-img.jpeg') }}" alt="Feature image" class="">
-            <h3 class="text-white font-montserrat font-bold text-2xl mt-2">SOCIAL MEDIA MARKETING</h3>
-            <p class="text-secondary font-montserrat text-xl font-medium group-hover:text-primary">Above IT</p>
-        </a>
-        <a href="#" class="bg-primary px-8 pt-10 pb-5 hover:bg-secondary duration-200 transition-all group ">
-            <img src="{{ asset('src/assets/feature-img.jpeg') }}" alt="Feature image" class="">
-            <h3 class="text-white font-montserrat font-bold text-2xl mt-2">SOCIAL MEDIA MARKETING</h3>
-            <p class="text-secondary font-montserrat text-xl font-medium group-hover:text-primary">Above IT</p>
-        </a>
-        <a href="#" class="bg-primary px-8 pt-10 pb-5 hover:bg-secondary duration-200 transition-all group ">
-            <img src="{{ asset('src/assets/feature-img.jpeg') }}" alt="Feature image" class="">
-            <h3 class="text-white font-montserrat font-bold text-2xl mt-2">SOCIAL MEDIA MARKETING</h3>
-            <p class="text-secondary font-montserrat text-xl font-medium group-hover:text-primary">Above IT</p>
-        </a>
+        @endforeach
+
+
     </div>
 </section>
+@endif
+<!-- Featured -->
+
 <!-- Featured End -->
 @include('web.assets.testimonials')
 @include('web.assets.latest')
