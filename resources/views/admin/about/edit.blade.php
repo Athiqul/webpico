@@ -1,7 +1,7 @@
 @extends('admin.layout.master_layout')
 
 @section('title')
-    {{ $item->title }}| MasterSeller
+   About Page| MasterSeller
 @endsection
 
 @section('need-css')
@@ -21,14 +21,14 @@
     <div class="page-content" data-select2-id="27">
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-            <div class="breadcrumb-title pe-3">Edit Blog</div>
+            <div class="breadcrumb-title pe-3">About Page</div>
             <div class="ps-3">
                 <nav aria-label="breadcrumb">
                     <ol class="breadcrumb mb-0 p-0">
-                        <li class="breadcrumb-item"><a href="{{ route('admin.blogs.index') }}"><i
+                        <li class="breadcrumb-item"><a href="{{ route('dashboard') }}"><i
                                     class="bx bx-home-alt"></i></a>
                         </li>
-                        <li class="breadcrumb-item active" aria-current="page">Update Blog</li>
+                        <li class="breadcrumb-item active" aria-current="page">About Page</li>
                     </ol>
                 </nav>
             </div>
@@ -37,11 +37,11 @@
         <!--end breadcrumb-->
         <div class="row" data-select2-id="26">
             <div class="col-xl-9 mx-auto" data-select2-id="25">
-                <h6 class="mb-0 text-uppercase">Edit Blog</h6>
+                <h6 class="mb-0 text-uppercase">About Page</h6>
                 <hr>
                 <div class="card" data-select2-id="24">
                     <div class="card-body" data-select2-id="23">
-                        <form method="POST" action="{{ route('admin.blogs.edit',$item->id) }}" id="transfer" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('admin.about') }}" id="transfer" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
 
@@ -49,13 +49,13 @@
 
 
                                 <div class="col-12 mb-2">
-                                    <label for="amount" class="form-label">Type Title</label>
+                                    <label for="amount" class="form-label">Type About Main Heading Title</label>
                                     <div class=" form-group ">
-                                      <input type="text" class="form-control border-start-0" name="title" placeholder="Type title of blog" title="Type title" value="{{ old('title',$item->title) }}" required>
+                                      <input type="text" class="form-control border-start-0" name="about_title" placeholder="Type About Main Heading Title" title="Type About Main Heading Title" value="{{ old('about_title',$item?->about_title??'') }}" required>
 
                                     </div>
 
-                                    @error('title')
+                                    @error('about_title')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
 
@@ -63,67 +63,97 @@
 
 
                                 <div class="col-12 mb-2">
-                                    <label for="amount" class="form-label">Description</label>
-                                    <div class="input-group form-group">
-                                        <textarea name="desc" id="" rows="10" required>{!! old('desc',$item->desc) !!} </textarea>
-
-                                    </div>
-                                    @error('desc')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-
-                                </div>
-
-                                <div class="col-12 mb-2">
-                                    <label for="amount" class="form-label">SEO Meta Description</label>
-                                    <div class="input-group form-group">
-                                        <input type="text" class="form-control border-start-0" name="meta_desc" placeholder="Type meta description of this blog" title="Type meta descriptions" value="{{ old('meta_desc',$item->meta_desc??'') }}">
-                                    </div>
-                                    @error('meta_desc')
-                                        <span class="text-danger">{{ $message }}</span>
-                                    @enderror
-
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Tags</label>
-                                    <div class="input-group form-group">
-                                        <input type="text" name="tags" class="form-control visually-hidden" data-role="tagsinput" value="{{ old('tags',$item->tags) }}" required>
-                                    </div>
-
-                                    @error('tags')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                                </div>
-
-                                <div class="mb-3">
-                                    <label class="form-label">Meta Keywords</label>
-                                    <div class="input-group form-group">
-                                        <input type="text" name="meta_keywords" class="form-control visually-hidden" data-role="tagsinput" value="{{ old('meta_keywords',$item->meta_keywords??'') }}" >
-                                    </div>
-
-                                    @error('meta_keywords')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                                </div>
-
-                                <div class="col-12 mb-2">
-                                    <label for="amount" class="form-label">Upload Image </label>
+                                    <label for="amount" class="form-label">About Page Video Link</label>
                                     <div class=" form-group ">
-                                      <input type="file" class="form-control border-start-0" name="image" accept="image/jpeg,image/png" onchange="changeImage(event)"  title="upload image" value="{{ old('image') }}" >
+                                      <input type="text" class="form-control border-start-0" name="video_link" placeholder="About Page Video Link" title="About Page Video Link" value="{{ old('video_link',$item?->video_link??'') }}" required>
 
                                     </div>
 
-                                    @error('image')
+                                    @error('video_link')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+
+                                </div>
+
+
+                                <div class="col-12 mb-2">
+                                    <label for="amount" class="form-label">About Short Description</label>
+                                    <div class="input-group form-group">
+                                        <textarea name="about_short_desc" id="" rows="10" required>{!! old('about_short_desc',$item?->about_short_desc??'') !!} </textarea>
+
+                                    </div>
+                                    @error('about_short_desc')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+
+                                </div>
+
+                                <div class="col-12 mb-2">
+                                    <label for="amount" class="form-label">About Right Side Description</label>
+                                    <div class="input-group form-group">
+                                        <textarea name="about_right_desc" id="" rows="10" required>{!! old('about_right_desc',$item?->about_right_desc??'') !!} </textarea>
+
+                                    </div>
+                                    @error('about_right_desc')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+
+                                </div>
+
+
+                                <div class="col-12 mb-2">
+                                    <label for="amount" class="form-label">Right Side Image </label>
+                                    <div class=" form-group ">
+                                      <input type="file" class="form-control border-start-0" name="right_image" accept="image/jpeg,image/png" onchange="changeImage(event,'right')"  title="upload image" required >
+
+                                    </div>
+
+                                    @error('right_image')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
 
                                 </div>
 
                                 <div class="col-6 mb-2">
-                                    <img src="{{ route('public.image',['blogs',$item->image]) }}" id="preview" width="300px" height="250px" alt="">
+                                    <img src="{{($item==null)?asset('assets/images/no_image.jpg'): route('public.image',['about',$item->right_image]) }}" id="rightPreview" width="300px" height="250px" alt="">
 
                                 </div>
+
+
+                                <div class="col-12 mb-2">
+                                    <label for="amount" class="form-label">About Left Description</label>
+                                    <div class="input-group form-group">
+                                        <textarea name="about_left_desc" id="" rows="10" required>{!! old('about_left_desc',$item?->about_left_desc??'') !!} </textarea>
+
+                                    </div>
+                                    @error('about_left_desc')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+
+                                </div>
+
+
+                                <div class="col-12 mb-2">
+                                    <label for="amount" class="form-label">Left Side Image </label>
+                                    <div class=" form-group ">
+                                      <input type="file" class="form-control border-start-0" name="left_image" accept="image/jpeg,image/png" onchange="changeImage(event,'left')"  title="upload image" required >
+
+                                    </div>
+
+                                    @error('left_image')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+
+                                </div>
+
+                                <div class="col-6 mb-2">
+                                    <img src="{{($item==null)?asset('assets/images/no_image.jpg'): route('public.image',['about',$item->left_image]) }}" id="leftPreview" width="300px" height="250px" alt="">
+
+                                </div>
+
+
+
+
 
 
 
@@ -133,7 +163,7 @@
 
                                 <div class="col-12 mt-3">
                                     <button type="submit" class="btn btn-info text-light px-5"> <i
-                                            class="bx bxs-send"></i>Update Blog</button>
+                                            class="bx bxs-send"></i>{{ $item==null?"Add About page":"Update About Page" }}</button>
                                 </div>
                             </div>
 
@@ -158,11 +188,12 @@
     <script>
 
 
-      function changeImage(event)
+      function changeImage(event,side)
 {
   if(event.target.files.length>0){
     var src=URL.createObjectURL( event.target.files[0]);
-    let preview=document.getElementById('preview');
+
+    let preview=(side=='right')?document.getElementById('rightPreview'):document.getElementById('leftPreview');
     preview.src=src;
   }
 }

@@ -98,7 +98,7 @@
             </ul>
         </li>
         <li>
-            <a href="javascript:;" class="has-arrow">
+            <a href="{{ route('admin.about') }}" class="has-arrow">
                 <div class="parent-icon"><i class="bx bx-category"></i>
                 </div>
                 <div class="menu-title">About Page</div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AboutPage;
 use App\Http\Controllers\Admin\BlogsController;
 use App\Http\Controllers\Admin\Contact;
 use App\Http\Controllers\Admin\OurworkController;
@@ -87,6 +88,14 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::put('blog/{id}','update');
         Route::get('blog-status-change/{id}','statusChange')->name('admin.blogs.status');
         route::get('blog-delete/{id}','destroy')->name('admin.blogs.delete');
+    });
+
+
+    Route::controller(AboutPage::class)->group(function(){
+
+        Route::get('about-page','edit')->name('admin.about');
+        Route::put('about-page','update');
+
     });
 
 });
