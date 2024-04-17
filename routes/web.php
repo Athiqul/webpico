@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BlogsController;
 use App\Http\Controllers\Admin\Contact;
 use App\Http\Controllers\Admin\OurworkController;
 use App\Http\Controllers\Admin\ServicesCategoryController;
@@ -76,6 +77,16 @@ Route::middleware('auth')->prefix('admin')->group(function () {
         Route::put('ourwork/{id}','update');
         Route::get('ourwork-status-change/{id}','statusChange')->name('admin.ourwork.status');
         route::get('ourwork-delete/{id}','destroy')->name('admin.ourwork.delete');
+    });
+
+    Route::controller(BlogsController::class)->group(function(){
+        Route::get('blog-add','add')->name('admin.blogs.add');
+        Route::post('blog-add','create');
+        Route::get('blog-list','index')->name('admin.blogs.index');
+        Route::get('blog/{id}','edit')->name('admin.blogs.edit');
+        Route::put('blog/{id}','update');
+        Route::get('blog-status-change/{id}','statusChange')->name('admin.blogs.status');
+        route::get('blog-delete/{id}','destroy')->name('admin.blogs.delete');
     });
 
 });

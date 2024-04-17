@@ -46,7 +46,7 @@ class BlogsController extends Controller
             }
 
              //Check slugs exist
-             $slug = str_replace(' ', '-',$request->title);
+             $slug = str_replace(' ', '-',strtolower($request->title));
              //$slugs = Blogs::where('slug', $slug)->first(); It won't create dublicate value becasue titles are unique
 
             // Create a  blog entry
