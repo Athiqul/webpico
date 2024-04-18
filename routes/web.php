@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\ServicesSubCategory;
 use App\Http\Controllers\Admin\SocialMedia;
 use App\Http\Controllers\Admin\Testimonal;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Web\About;
 use App\Http\Controllers\Web\BlogsController as WebBlogsController;
 use App\Http\Controllers\Web\Home;
 use App\Http\Controllers\Web\Ourwork;
@@ -27,6 +28,7 @@ Route::get('/ourwork',[Ourwork::class,'index'])->name('web.ourwork');
 Route::get('/blogs',[WebBlogsController::class,'index'])->name('web.blogs');
 Route::get('/blog/{id}',[WebBlogsController::class,'details'])->name('web.blog_details');
 Route::get('/blog-tags',[WebBlogsController::class,'tagWise'])->name('web.blog_tags');
+Route::get('/about',[About::class,'index'])->name('web.about');
 
 Route::get('/dashboard', function () {
     return view('admin.home');

@@ -67,8 +67,8 @@
                 <li class="nav-link {{ Route::currentRouteName()=='web.blogs'?'active':'' }}">
                     <a href="{{ route('web.blogs') }}" class="">Blogs</a>
                 </li>
-                <li class="nav-link">
-                    <a href="/about-us.html" class="">About Us</a>
+                <li class="nav-link {{ Route::currentRouteName()=='web.blogs'?'active':'' }}">
+                    <a href="{{ route('web.about') }}" class="">About Us</a>
                 </li>
             </ul>
         </div>
