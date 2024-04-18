@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\SocialMedia;
 use App\Http\Controllers\Admin\Testimonal;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Web\Home;
+use App\Http\Controllers\Web\Ourwork;
 use App\Http\Controllers\Web\Services;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +22,7 @@ Route::get('image/{folder}/{image}',[Testimonal::class,'image'])->name('public.i
 Route::get('/',[Home::class,'index'])->name('web.home');
 
 Route::get('/services',[Services::class,'index'])->name('web.services');
-
+Route::get('/ourwork',[Ourwork::class,'index'])->name('web.ourwork');
 Route::get('/dashboard', function () {
     return view('admin.home');
 })->middleware(['auth', 'verified'])->name('dashboard');

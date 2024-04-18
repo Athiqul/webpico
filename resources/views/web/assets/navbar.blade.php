@@ -5,11 +5,11 @@
         </div>
         <div class="hidden md:block">
             <ul class="block md:flex gap-3">
-                <li class="nav-link active">
+                <li class="nav-link {{ Route::currentRouteName()=='web.home'?'active':'' }}">
                     <a href="{{ route('web.home') }}" class="">Home</a>
                 </li>
                 <div class="group relative">
-                    <li class="nav-link after:content-arrow-min">
+                    <li class="nav-link after:content-arrow-min  {{ Route::currentRouteName()=='web.services'?'active':'' }}">
                         <a href="{{ route('web.services') }}" class="">Services</a>
                     </li>
                     <div class="hidden group-hover:block absolute">
@@ -22,7 +22,7 @@
 
                          @if (count($category->subcategories)>0)
                          <li onclick="toggleHandle({{$category->id}})"
-                            class="dropdown-link flex gap-6 justify-between items-center relative group">
+                            class="dropdown-link flex gap-6 justify-between items-center relative group ">
                             <p class="">{{ ucwords($category->name) }}</p>
                          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"
                          xmlns="http://www.w3.org/2000/svg">
@@ -61,8 +61,8 @@
 
                     </div>
                 </div>
-                <li class="nav-link">
-                    <a href="/work.html" class="">Our Work</a>
+                <li class="nav-link {{ Route::currentRouteName()=='web.ourwork'?'active':'' }}">
+                    <a href="{{ route('web.ourwork') }}" class="">Our Work</a>
                 </li>
                 <li class="nav-link">
                     <a href="/blog.html" class="">Blogs</a>
