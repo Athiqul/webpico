@@ -93,10 +93,10 @@
                                                             </i>
                                                         </a>
 
-                                                        <a  href="javascript;"
+                                                        {{-- <a  href="javascript;"
                                                           target="_blank"  class="btn {{ $item->status==1?'btn-info':'btn-secondary' }} " title="{{ $item->status==1?'Web In web':'Not Available in web' }}">
                                                             <i class="lni lni-eye"></i>
-                                                        </a>
+                                                        </a> --}}
                                                         <a onclick="alertItem(event)" title="Delete this service item" href="{{ route('admin.ourwork.delete',$item->id) }}"
                                                             class="btn bg-danger">
                                                             <i class="lni lni-trash"></i>

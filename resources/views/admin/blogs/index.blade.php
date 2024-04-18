@@ -92,7 +92,7 @@
                                                             </i>
                                                         </a>
 
-                                                        <a  href="javascript;"
+                                                        <a  href="{{ route('web.blog_details',encrypt($item->id)) }}"
                                                           target="_blank"  class="btn {{ $item->status==1?'btn-info':'btn-secondary' }} " title="{{ $item->status==1?'Web In web':'Not Available in web' }}">
                                                             <i class="lni lni-eye"></i>
                                                         </a>
